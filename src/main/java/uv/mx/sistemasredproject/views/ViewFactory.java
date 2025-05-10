@@ -12,7 +12,7 @@ public class ViewFactory {
         Scene scene;
 
         try {
-            scene = new Scene(loader.load(), 424,424);
+            scene = new Scene(loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -24,8 +24,8 @@ public class ViewFactory {
     }
 
     // actual views
-    public void showMainWindow() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hello-view.fxml"));
+    public void showClientWindow() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client.fxml"));
         createStage(loader);
     }
 }
