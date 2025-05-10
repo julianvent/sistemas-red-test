@@ -12,14 +12,14 @@ public class ViewFactory {
         Scene scene;
 
         try {
-            scene = new Scene(loader.load());
+            scene = new Scene(loader.load(), 424,424);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.setTitle("los que saben");
+        stage.setTitle("LosqueSaben System");
         stage.show();
     }
 
