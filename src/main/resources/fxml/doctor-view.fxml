@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox prefWidth="100.0">
-         <children>
-            <BorderPane>
-               <left>
-                  <Label text="Lista de médicos" BorderPane.alignment="CENTER" />
-               </left>
-               <right>
-                  <HBox BorderPane.alignment="CENTER">
-                     <children>
-                        <Button mnemonicParsing="false" text="Agregar" />
-                        <Button disable="true" mnemonicParsing="false" text="Editar" />
-                        <Button disable="true" mnemonicParsing="false" text="Eliminar" />
-                     </children>
-                  </HBox>
-               </right>
-            </BorderPane>
-            <ListView prefHeight="200.0" prefWidth="200.0" />
-         </children>
-      </VBox>
-   </children>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0"
+      prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="uv.mx.sistemasredproject.controllers.DoctorViewController">
+    <children>
+        <VBox prefWidth="100.0">
+            <children>
+                <BorderPane>
+                    <left>
+                        <Label text="Lista de médicos" BorderPane.alignment="CENTER"/>
+                    </left>
+                    <right>
+                        <HBox BorderPane.alignment="CENTER">
+                            <children>
+                                <Button fx:id="addDoctor" mnemonicParsing="false" text="Agregar"/>
+                                <Button fx:id="editDoctor" disable="true" mnemonicParsing="false" text="Editar"/>
+                                <Button fx:id="deleteDoctor" disable="true" mnemonicParsing="false" text="Eliminar"/>
+                            </children>
+                        </HBox>
+                    </right>
+                </BorderPane>
+                <ListView fx:id="doctorListView" prefHeight="200.0" prefWidth="200.0"/>
+            </children>
+        </VBox>
+    </children>
 </VBox>

@@ -6,4 +6,5 @@ module uv.mx.sistemasredproject {
     opens uv.mx.sistemasredproject to javafx.fxml;
     exports uv.mx.sistemasredproject;
     exports uv.mx.sistemasredproject.views;
+    exports uv.mx.sistemasredproject.controllers;
 }
