@@ -3,8 +3,8 @@ package uv.mx.sistemasredproject.controllers;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import uv.mx.sistemasredproject.model.Model;
-import uv.mx.sistemasredproject.views.ViewFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -15,10 +15,17 @@ public class DoctorViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        addDoctor.setOnAction(actionEvent -> onAddDoctor());
+        addDoctor.setOnAction(actionEvent ->
+            {
+            try {
+                onAddDoctor();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            });
     }
 
-    private void onAddDoctor() {
-        Model.getInstance().getViewFactory().showAddDoctorView();
+    private void onAddDoctor() throws IOException {
+        Model.getInstance().getViewFactory().showCreateDoctorView();
     }
 }

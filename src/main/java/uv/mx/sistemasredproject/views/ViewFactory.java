@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 public class ViewFactory {
     private final ObjectProperty<SubmenuOptions> selectedMenuItem;
     private VBox doctorsView;
+    private VBox createDoctorView;
 
     public ViewFactory() {
         selectedMenuItem = new SimpleObjectProperty<>(SubmenuOptions.DOCTORS);
@@ -42,6 +44,10 @@ public class ViewFactory {
         return new FXMLLoader(getClass().getResource("/fxml/" + source));
     }
 
+    public void closeStage(Stage stage) {
+        stage.close();
+    }
+
     // actual views
     public void showClientWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client.fxml"));
@@ -63,9 +69,15 @@ public class ViewFactory {
         return doctorsView;
     }
 
-    public void showAddDoctorView() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create-doctor.fxml"));
-        createStage(loader);
+    public VBox getCreateDoctorView() throws IOException {
+        createDoctorView = createLoader("create-doctor.fxml").load();
+        return createDoctorView;
+    }
+
+    public void showCreateDoctorView() throws IOException {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.getDialogPane().setContent(getCreateDoctorView());
+        dialog.show();
     }
 
     //
