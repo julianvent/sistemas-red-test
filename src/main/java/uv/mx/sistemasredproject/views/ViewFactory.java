@@ -1,18 +1,35 @@
 package uv.mx.sistemasredproject.views;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class ViewFactory {
+    private final ObjectProperty<SubmenuOptions> selectedMenuItem;
+    private VBox doctorsView;
+    private VBox createDoctorView;
+
+    public ViewFactory() {
+        selectedMenuItem = new SimpleObjectProperty<>(SubmenuOptions.DOCTORS);
+    }
+
+    public ObjectProperty<SubmenuOptions> selectedMenuItemProperty() {
+        return selectedMenuItem;
+    }
+
+
     // utility
     private void createStage(FXMLLoader loader) {
         Scene scene;
 
         try {
-            scene = new Scene(loader.load(), 424,424);
+            scene = new Scene(loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -23,9 +40,45 @@ public class ViewFactory {
         stage.show();
     }
 
+    private FXMLLoader createLoader(String source) {
+        return new FXMLLoader(getClass().getResource("/fxml/" + source));
+    }
+
+    public void closeStage(Stage stage) {
+        stage.close();
+    }
+
     // actual views
-    public void showMainWindow() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/hello-view.fxml"));
+    public void showClientWindow() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client.fxml"));
         createStage(loader);
     }
+
+    /* --------
+    submenus
+    --------- */
+    // doctors
+    public VBox getDoctorsView() {
+        if (doctorsView == null) {
+            try {
+                doctorsView = createLoader("doctors-view.fxml").load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return doctorsView;
+    }
+
+    public VBox getCreateDoctorView() throws IOException {
+        createDoctorView = createLoader("create-doctor.fxml").load();
+        return createDoctorView;
+    }
+
+    public void showCreateDoctorView() throws IOException {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.getDialogPane().setContent(getCreateDoctorView());
+        dialog.show();
+    }
+
+    //
 }
