@@ -1,5 +1,7 @@
 package uv.mx.sistemasredproject.utils;
 
+import javafx.scene.control.Label;
+
 import java.util.regex.Pattern;
 
 public class Validador {
@@ -31,5 +33,16 @@ public class Validador {
         if (!CURP_PATTERN.matcher(curp.toUpperCase()).matches()) return "La CURP no es válida.";
 
         return VALIDO;
+    }
+
+    public static boolean validateField(String field, Label warning) {
+        boolean isValid = !field.isBlank();
+        if (!isValid) {
+            warning.setVisible(true);
+            warning.setText("Requerido");
+        } else {
+            warning.setVisible(false);
+        }
+        return isValid;
     }
 }

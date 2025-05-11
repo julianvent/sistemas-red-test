@@ -6,36 +6,62 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.mx.sistemasredproject.controllers.CreateDoctorController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox prefWidth="100.0">
             <children>
-                <Label text="Agregar nuevo médico" />
-                <HBox>
+                <Label text="Agregar nuevo médico"/>
+                <VBox>
                     <children>
-                        <Label text="Nombre" />
-                        <TextField promptText="Nombre del médico" />
+                        <HBox>
+                            <children>
+                                <Label text="Nombre"/>
+                                <TextField fx:id="nameField" promptText="Nombre del médico"/>
+                            </children>
+                        </HBox>
+                        <Label fx:id="nameWarning" textFill="RED"/>
+                    </children>
+                </VBox>
+                <VBox>
+                    <children>
+                        <HBox prefWidth="200.0">
+                            <children>
+                                <Label text="Especialidad"/>
+                                <TextField fx:id="degreeField" promptText="Especialidad"/>
+                            </children>
+                        </HBox>
+                        <Label fx:id="degreeWarning" textFill="RED"/>
+                    </children>
+                </VBox>
+                <VBox>
+                    <children>
+                        <HBox prefWidth="200.0">
+                            <children>
+                                <Label text="Cédula"/>
+                                <TextField fx:id="cedulaField" promptText="Cédula"/>
+                            </children>
+                        </HBox>
+                        <Label fx:id="cedulaWarning" textFill="RED"/>
+                    </children>
+                </VBox>
+                <VBox>
+                    <children>
+                        <HBox prefWidth="200.0">
+                            <children>
+                                <Label text="Correo electrónico"/>
+                                <TextField fx:id="emailField" promptText="losquesaben@gmail.com"/>
+                            </children>
+                        </HBox>
+                        <Label fx:id="emailWarning" textFill="RED"/>
+                    </children>
+                </VBox>
+                <HBox alignment="CENTER_RIGHT">
+                    <children>
+                        <Button fx:id="createButton" mnemonicParsing="false" text="Confirmar"/>
+                        <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancelar"/>
                     </children>
                 </HBox>
-                <HBox prefWidth="200.0">
-                    <children>
-                        <Label text="Especialidad" />
-                        <TextField promptText="Especialidad" />
-                    </children>
-                </HBox>
-                <HBox prefWidth="200.0">
-                    <children>
-                        <Label text="Cédula" />
-                        <TextField promptText="Cédula" />
-                    </children>
-                </HBox>
-                <HBox prefWidth="200.0">
-                    <children>
-                        <Label text="Correo electrónico" />
-                        <TextField promptText="losquesaben@gmail.com" />
-                    </children>
-                </HBox>
-                <Button fx:id="createButton" mnemonicParsing="false" text="Confirmar" />
             </children>
         </VBox>
     </children>

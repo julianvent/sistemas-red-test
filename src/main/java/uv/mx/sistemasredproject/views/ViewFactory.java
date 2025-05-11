@@ -7,13 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import uv.mx.sistemasredproject.controllers.ClientController;
+import uv.mx.sistemasredproject.controllers.CreateDoctorController;
+import uv.mx.sistemasredproject.server.models.Medico;
 
 import java.io.IOException;
 
 public class ViewFactory {
     private final ObjectProperty<SubmenuOptions> selectedMenuItem;
-    private VBox doctorsView;
-    private VBox createDoctorView;
 
     public ViewFactory() {
         selectedMenuItem = new SimpleObjectProperty<>(SubmenuOptions.DOCTORS);
@@ -51,7 +52,17 @@ public class ViewFactory {
     // actual views
     public void showClientWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client.fxml"));
+        ClientController controller = new ClientController();
+        loader.setController(controller);
         createStage(loader);
+    }
+
+    public VBox getRefresh() {
+        try {
+            return createLoader("refresh.fxml").load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /* --------
@@ -59,26 +70,28 @@ public class ViewFactory {
     --------- */
     // doctors
     public VBox getDoctorsView() {
-        if (doctorsView == null) {
-            try {
-                doctorsView = createLoader("doctors-view.fxml").load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            return createLoader("doctor-view.fxml").load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return doctorsView;
     }
 
-    public VBox getCreateDoctorView() throws IOException {
-        createDoctorView = createLoader("create-doctor.fxml").load();
-        return createDoctorView;
+    private VBox getCreateDoctorView(Medico medico) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create-doctor.fxml"));
+            CreateDoctorController controller = new CreateDoctorController(medico);
+            loader.setController(controller);
+            return loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void showCreateDoctorView() throws IOException {
+    public void showCreateDoctorView(Medico medico) {
         Dialog<String> dialog = new Dialog<>();
-        dialog.getDialogPane().setContent(getCreateDoctorView());
+        if (medico != null) dialog.getDialogPane().setContent(getCreateDoctorView(medico));
+        else dialog.getDialogPane().setContent(getCreateDoctorView(null));
         dialog.show();
     }
-
-    //
 }

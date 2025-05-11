@@ -1,17 +1,17 @@
 package uv.mx.sistemasredproject.server.models;
 
-public class Model {
-    private static Model model;
+public class ServerModel {
+    private static ServerModel model;
     private final DatabaseDriver databaseDriver;
 
 
-    public Model() {
+    public ServerModel() {
         databaseDriver = new DatabaseDriver();
     }
 
-    public static synchronized Model getInstance() {
+    public static synchronized ServerModel getInstance() {
         if (model == null) {
-            model = new Model();
+            model = new ServerModel();
         }
         return model;
     }
