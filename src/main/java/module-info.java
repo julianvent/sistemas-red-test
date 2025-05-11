@@ -9,4 +9,7 @@ module uv.mx.sistemasredproject {
     exports uv.mx.sistemasredproject;
     exports uv.mx.sistemasredproject.views;
     exports uv.mx.sistemasredproject.controllers;
+    exports uv.mx.sistemasredproject.interfaces;
+    exports uv.mx.sistemasredproject.server.rmi;
+    exports uv.mx.sistemasredproject.server.models;
 }
