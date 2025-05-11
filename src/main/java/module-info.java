@@ -1,6 +1,7 @@
 module uv.mx.sistemasredproject {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens uv.mx.sistemasredproject to javafx.fxml;
