@@ -229,14 +229,13 @@ public class DatabaseDriver {
         return citas;
     }
 
-    public void editarCita(int citaId, String fechaHora, String motivo, int medicoId, int pacienteId){
+    public void editarCita(int citaId, String fechaHora, String motivo, int medicoId){
         String sql = "UPDATE cita SET fecha_hora = ?, motivo = ?, medico_id = ? WHERE cita_id = ?";
         try(PreparedStatement pstmt = connection.prepareStatement(sql)){
             pstmt.setString(1, fechaHora);
             pstmt.setString(2, motivo);
             pstmt.setInt(3, medicoId);
-            pstmt.setInt(4, pacienteId);
-            pstmt.setInt(5, citaId);
+            pstmt.setInt(4, citaId);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
