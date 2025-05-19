@@ -3,37 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.mx.sistemasredproject.controllers.DoctorViewController">
-    <children>
-        <VBox prefWidth="100.0">
-            <children>
-                <BorderPane>
-                    <left>
-                        <Label text="Lista de médicos" BorderPane.alignment="CENTER" />
-                    </left>
-                    <right>
-                        <HBox BorderPane.alignment="CENTER">
-                            <children>
-                                <Button fx:id="addDoctor" mnemonicParsing="false" text="Agregar" />
-                                <Button fx:id="editDoctor" disable="true" mnemonicParsing="false" text="Editar" />
-                                <Button fx:id="deleteDoctor" disable="true" mnemonicParsing="false" text="Eliminar" />
-                            </children>
-                        </HBox>
-                    </right>
-                </BorderPane>
-            <TableView fx:id="doctors">
-              <columns>
-                <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Nombre" />
-                  <TableColumn fx:id="degreeColumn" prefWidth="75.0" text="Especialidad" />
-                  <TableColumn fx:id="cedulaColumn" prefWidth="75.0" text="Cédula" />
-                  <TableColumn fx:id="emailColumn" prefWidth="75.0" text="Correo electrónico" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            </children>
-        </VBox>
-    </children>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0"
+      prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="uv.mx.sistemasredproject.controllers.DoctorViewController">
+    <VBox prefWidth="100.0">
+        <BorderPane>
+            <left>
+                <Label text="Lista de médicos" BorderPane.alignment="CENTER"/>
+            </left>
+            <right>
+                <HBox BorderPane.alignment="CENTER">
+                    <Button fx:id="addDoctor" mnemonicParsing="false" text="Agregar"/>
+                    <Button fx:id="editDoctor" disable="true" mnemonicParsing="false" text="Editar"/>
+                    <Button fx:id="deleteDoctor" disable="true" mnemonicParsing="false" text="Eliminar"/>
+                </HBox>
+            </right>
+        </BorderPane>
+    </VBox>
+    <ListView fx:id="doctorListView" prefHeight="200.0" prefWidth="200.0"/>
 </VBox>

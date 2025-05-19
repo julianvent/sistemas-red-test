@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0"
+      prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="uv.mx.sistemasredproject.controllers.PatientViewController">
+   <VBox prefWidth="100.0">
+      <BorderPane>
+         <left>
+            <Label text="Lista de pacientes" BorderPane.alignment="CENTER"/>
+         </left>
+         <right>
+            <HBox BorderPane.alignment="CENTER">
+               <Button fx:id="add" mnemonicParsing="false" text="Agregar"/>
+               <Button fx:id="edit" disable="true" mnemonicParsing="false" text="Editar"/>
+               <Button fx:id="delete" disable="true" mnemonicParsing="false" text="Eliminar"/>
+            </HBox>
+         </right>
+      </BorderPane>
+   </VBox>
+   <ListView fx:id="patientsListView" prefHeight="200.0" prefWidth="200.0"/>
+</VBox>

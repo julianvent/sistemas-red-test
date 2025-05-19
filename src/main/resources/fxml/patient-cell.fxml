@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="770.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="770.0" spacing="30.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label fx:id="idLabel" maxWidth="30.0" prefWidth="30.0" text="ID" textAlignment="RIGHT" />
+        <Label fx:id="nameLabel" maxWidth="150.0" prefWidth="150.0" text="Jose Julian Ventura Uscanga" textAlignment="RIGHT" />
+        <Label fx:id="curpLabel" maxWidth="125.0" prefWidth="125.0" text="VEUJ040305HVZNSLA5" textAlignment="RIGHT" />
+        <Label fx:id="phoneLabel" maxWidth="70.0" prefWidth="70.0" text="9213024843" textAlignment="RIGHT" />
+        <Label fx:id="emailLabel" maxWidth="175.0" prefWidth="175.0" text="correoalgolargo@gmail.com" textAlignment="RIGHT" />
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+    </padding>
+</HBox>
