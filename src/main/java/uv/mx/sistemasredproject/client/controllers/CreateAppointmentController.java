@@ -11,10 +11,10 @@ import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 import uv.mx.sistemasredproject.model.Cita;
 import uv.mx.sistemasredproject.model.Medico;
 import uv.mx.sistemasredproject.model.Paciente;
-import uv.mx.sistemasredproject.server.models.ServerModel;
 import uv.mx.sistemasredproject.utils.Validador;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,16 +42,24 @@ public class CreateAppointmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        doctorsListView.setItems(FXCollections.observableList(ServerModel
-                .getInstance()
-                .getDatabaseDriver()
-                .obtenerMedicos()));
+        try {
+            doctorsListView.setItems(FXCollections.observableList(Model
+                    .getInstance()
+                    .getMedicoService()
+                    .listarMedicos()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         doctorsListView.setCellFactory(e -> new CustomDoctorCellFactory());
 
-        patientsListView.setItems(FXCollections.observableList(ServerModel
-                .getInstance()
-                .getDatabaseDriver()
-                .obtenerPacientes()));
+        try {
+            patientsListView.setItems(FXCollections.observableList(Model
+                    .getInstance()
+                    .getMedicoService()
+                    .listarPacientes()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         patientsListView.setCellFactory(e -> new CustomPatientCellFactory());
 
         hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(9, 17));
@@ -72,33 +80,42 @@ public class CreateAppointmentController implements Initializable {
 
         dateWarning.setText(Validador.validateNull(date));
         motivoWarning.setText(Validador.validateRequiredField(motivo));
-        doctorWarning.setText(Validador.validateNull(doctor));
 
 
-        boolean proceed = dateWarning.getText().isBlank() && motivoWarning.getText().isBlank() && doctorWarning
-                .getText()
-                .isBlank();
+        boolean proceed = dateWarning.getText().isBlank() && motivoWarning.getText().isBlank();
 
         if (proceed) {
             Timestamp timestamp = Timestamp.valueOf(date.atTime(hours, minutes));
             if (appointment != null) {
+                int doctorId = (doctor == null) ? appointment.getMedicoId() : doctor.getMedicoId();
+
                 System.out.println("Actualizando cita...");
-                ServerModel.getInstance().getDatabaseDriver().actualizarCita(
-                        appointment.getCitaId(),
-                        timestamp.toString(),
-                        motivo,
-                        doctor.getMedicoId()
-                );
+                try {
+                    Model.getInstance().getMedicoService().actualizarCita(
+                            appointment.getCitaId(),
+                            timestamp.toString(),
+                            motivo,
+                            doctorId
+                    );
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 patientWarning.setText(Validador.validateNull(patient));
-                if (!patientWarning.getText().isBlank()) return;
+                doctorWarning.setText(Validador.validateNull(doctor));
+                if (!patientWarning.getText().isBlank() && doctorWarning.getText().isBlank()) return;
+
                 System.out.println("Creando cita...");
-                ServerModel.getInstance().getDatabaseDriver().agregarCita(
-                        timestamp.toString(),
-                        motivo,
-                        doctor.getMedicoId(),
-                        patient.getPacienteId()
-                );
+                try {
+                    Model.getInstance().getMedicoService().agregarCita(
+                            timestamp.toString(),
+                            motivo,
+                            doctor.getMedicoId(),
+                            patient.getPacienteId()
+                    );
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
             // close dialog
             Stage stage = (Stage) createButton.getScene().getWindow();
@@ -125,8 +142,7 @@ public class CreateAppointmentController implements Initializable {
             hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                     9,
                     17,
-                    dateTime.getHour(),
-                    30
+                    dateTime.getHour()
             ));
             minutesSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                     0,

@@ -4,7 +4,7 @@ import uv.mx.sistemasredproject.interfaces.IMedicoService;
 import uv.mx.sistemasredproject.model.Cita;
 import uv.mx.sistemasredproject.model.Medico;
 import uv.mx.sistemasredproject.model.Paciente;
-import uv.mx.sistemasredproject.server.models.*;
+import uv.mx.sistemasredproject.server.models.DatabaseDriver;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -39,6 +39,11 @@ public class MedicoServiceImpl extends UnicastRemoteObject implements IMedicoSer
     }
 
     @Override
+    public Medico getMedico(int medicoId) {
+        return db.getMedico(medicoId);
+    }
+
+    @Override
     public void agregarPaciente(String nombre, String curp, String telefono, String correo) throws RemoteException{
         db.agregarPaciente(nombre, curp, telefono, correo);
     }
@@ -55,6 +60,11 @@ public class MedicoServiceImpl extends UnicastRemoteObject implements IMedicoSer
     @Override
     public List<Paciente> listarPacientes() throws RemoteException{
         return db.obtenerPacientes();
+    }
+
+    @Override
+    public Paciente getPaciente(int pacienteId) throws RemoteException {
+        return db.getPaciente(pacienteId);
     }
 
     @Override

@@ -13,12 +13,14 @@ public interface IMedicoService extends Remote {
     void agregarMedico(String nombre, String especialidad, String cedula, String correoElectronico) throws RemoteException;
     void actualizarMedico(int medicoId, String nombre, String especialidad, String cedula, String correoElectronico) throws RemoteException;
     void eliminarMedico(int medicoId) throws RemoteException;
+    Medico getMedico(int medicoId) throws RemoteException;
     List<Medico> listarMedicos() throws RemoteException;
 
     void agregarPaciente(String nombre, String curp, String telefono, String correo) throws RemoteException;
     void actualizarPaciente(int pacienteId, String nombre, String curp, String telefono) throws RemoteException;
     void eliminarPaciente(int pacienteId) throws RemoteException;
     List<Paciente> listarPacientes() throws RemoteException;
+    Paciente getPaciente(int pacienteId) throws RemoteException;
 
     void agregarCita(String fechaHora, String motivo, int medicoId, int pacienteId) throws RemoteException;
     void actualizarCita(int citaId, String fechaHora, String motivo, int medicoId) throws RemoteException;

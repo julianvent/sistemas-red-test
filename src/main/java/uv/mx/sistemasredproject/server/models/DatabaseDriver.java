@@ -83,6 +83,7 @@ public class DatabaseDriver {
 
     public List<Medico> obtenerMedicos() {
         List<Medico> medicos = new ArrayList<>();
+        System.out.println("Obteniendo medicos");
         String sql = "SELECT * FROM medico";
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 

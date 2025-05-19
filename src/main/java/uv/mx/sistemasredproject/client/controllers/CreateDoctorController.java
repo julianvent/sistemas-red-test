@@ -7,11 +7,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.model.Medico;
-import uv.mx.sistemasredproject.server.models.ServerModel;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 import uv.mx.sistemasredproject.utils.Validador;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class CreateDoctorController implements Initializable {
@@ -55,15 +55,23 @@ public class CreateDoctorController implements Initializable {
 
         if (proceed) {
             if (medico != null) { // update
-                ServerModel.getInstance().getDatabaseDriver().actualizarMedico(
-                        medico.getMedicoId(),
-                        name,
-                        degree,
-                        cedula,
-                        email
-                );
+                try {
+                    Model.getInstance().getMedicoService().actualizarMedico(
+                            medico.getMedicoId(),
+                            name,
+                            degree,
+                            cedula,
+                            email
+                    );
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             } else { // create
-                ServerModel.getInstance().getDatabaseDriver().agregarMedico(name, degree, cedula, email);
+                try {
+                    Model.getInstance().getMedicoService().agregarMedico(name, degree, cedula, email);
+                } catch (RemoteException e) {
+                    throw new RuntimeException("Error del servidor al actualizar medico", e);
+                }
             }
 
             // close dialog
@@ -84,7 +92,7 @@ public class CreateDoctorController implements Initializable {
     private void initializeData() {
         if (medico != null) {
             nameField.setText(medico.getNombre());
-            degreeField.setText(medico.getCedula());
+            degreeField.setText(medico.getEspecialidad());
             cedulaField.setText(medico.getCedula());
             emailField.setText(medico.getCorreoElectronico());
         }

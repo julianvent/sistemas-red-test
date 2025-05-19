@@ -9,10 +9,10 @@ import javafx.scene.control.ListView;
 import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 import uv.mx.sistemasredproject.model.Paciente;
-import uv.mx.sistemasredproject.server.models.ServerModel;
 import uv.mx.sistemasredproject.client.views.PatientCellFactory;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -24,10 +24,14 @@ public class PatientViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        patientsListView.setItems(FXCollections.observableList(ServerModel
-                .getInstance()
-                .getDatabaseDriver()
-                .obtenerPacientes()));
+        try {
+            patientsListView.setItems(FXCollections.observableList(Model
+                    .getInstance()
+                    .getMedicoService()
+                    .listarPacientes()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         patientsListView.setCellFactory(e -> new PatientCellFactory());
         addCellListener();
         add.setOnAction(actionEvent -> onAdd());
@@ -63,7 +67,11 @@ public class PatientViewController implements Initializable {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             System.out.println("Eliminando a " + patient.getNombre());
-            ServerModel.getInstance().getDatabaseDriver().eliminarPaciente(patient.getPacienteId());
+            try {
+                Model.getInstance().getMedicoService().eliminarPaciente(patient.getPacienteId());
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
 
             // refresh view
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);

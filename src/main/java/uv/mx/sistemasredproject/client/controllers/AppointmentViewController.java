@@ -2,14 +2,18 @@ package uv.mx.sistemasredproject.client.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.client.views.AppointmentCellFactory;
+import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 import uv.mx.sistemasredproject.model.Cita;
-import uv.mx.sistemasredproject.server.models.ServerModel;
 
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AppointmentViewController implements Initializable {
@@ -20,15 +24,20 @@ public class AppointmentViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        appointmentListView.setItems(FXCollections.observableList(ServerModel
-                .getInstance()
-                .getDatabaseDriver()
-                .obtenerCitas()));
+        try {
+            appointmentListView.setItems(FXCollections.observableList(Model
+                    .getInstance()
+                    .getMedicoService()
+                    .listarCitas()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         appointmentListView.setCellFactory(edit -> new AppointmentCellFactory());
         setCellListener();
 
         add.setOnAction(actionEvent -> onAdd());
         edit.setOnAction(actionEvent -> onEdit());
+        delete.setOnAction(actionEvent -> onDelete());
     }
 
     private void setCellListener() {
@@ -46,5 +55,27 @@ public class AppointmentViewController implements Initializable {
     private void onEdit() {
         Cita appointment = appointmentListView.getSelectionModel().getSelectedItem();
         Model.getInstance().getViewFactory().getCreateAppointmentDialog(appointment);
+    }
+
+    private void onDelete() {
+        Cita appointment = appointmentListView.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Eliminar una cita");
+        alert.setHeaderText("Eliminar cita");
+        alert.setContentText("¿Estás seguro de eliminar la cita?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                Model.getInstance().getMedicoService().eliminarCita(appointment.getCitaId());
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+
+            // refresh view
+            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
+            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.APPOINTMENTS);
+        }
     }
 }

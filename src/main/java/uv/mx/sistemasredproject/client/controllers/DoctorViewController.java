@@ -5,11 +5,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.model.Medico;
-import uv.mx.sistemasredproject.server.models.ServerModel;
 import uv.mx.sistemasredproject.client.views.DoctorCellFactory;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -22,10 +22,15 @@ public class DoctorViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        doctorListView.setItems(FXCollections.observableList(ServerModel
-                .getInstance()
-                .getDatabaseDriver()
-                .obtenerMedicos()));
+        try {
+            doctorListView.setItems(FXCollections.observableList(Model
+                    .getInstance()
+                    .getMedicoService()
+                    .listarMedicos()));
+        } catch (RemoteException e) {
+            System.out.println("Error al listar medicos");
+            throw new RuntimeException(e);
+        }
         doctorListView.setCellFactory(e -> new DoctorCellFactory());
         addCellListener();
         addDoctor.setOnAction(actionEvent -> onAddDoctor());
@@ -60,7 +65,11 @@ public class DoctorViewController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            ServerModel.getInstance().getDatabaseDriver().eliminarMedico(medico.getMedicoId());
+            try {
+                Model.getInstance().getMedicoService().eliminarMedico(medico.getMedicoId());
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
 
             // refresh view
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);

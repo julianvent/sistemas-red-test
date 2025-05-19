@@ -4,14 +4,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.model.Cita;
 import uv.mx.sistemasredproject.model.Medico;
 import uv.mx.sistemasredproject.model.Paciente;
-import uv.mx.sistemasredproject.server.models.ServerModel;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class AppointmentCellController implements Initializable {
@@ -30,14 +29,21 @@ public class AppointmentCellController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Medico doctor = ServerModel.getInstance().getDatabaseDriver().getMedico(appointment.getMedicoId());
-        Paciente patient = ServerModel.getInstance().getDatabaseDriver().getPaciente(appointment.getPacienteId());
+        Medico doctor = null;
+        try {
+            doctor = Model.getInstance().getMedicoService().getMedico(appointment.getMedicoId());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        Paciente patient = null;
+        try {
+            patient = Model.getInstance().getMedicoService().getPaciente(appointment.getPacienteId());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-        LocalDateTime dateTime = LocalDateTime.parse(appointment.getFechaHora(), formatter);
         StringProperty dateProperty =
-                new SimpleStringProperty(dateTime.getDayOfMonth() + "-" + dateTime.getMonthValue() + "-" +
-                        dateTime.getYear() + " " + dateTime.getHour() + ":" + dateTime.getMinute());
+                new SimpleStringProperty(appointment.getFechaHora().replace(":00.0", ""));
 
         idLabel.textProperty().bind(appointment.citaIdProperty().asString());
         dateLabel.textProperty().bind(dateProperty);

@@ -8,10 +8,10 @@ import javafx.stage.Stage;
 import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 import uv.mx.sistemasredproject.model.Paciente;
-import uv.mx.sistemasredproject.server.models.ServerModel;
 import uv.mx.sistemasredproject.utils.Validador;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class CreatePatientController implements Initializable {
@@ -56,15 +56,23 @@ public class CreatePatientController implements Initializable {
         if (proceed) {
             if (patient != null) {
                 System.out.println("Actualizando paciente...");
-                ServerModel.getInstance().getDatabaseDriver().actualizarPaciente(
-                        patient.getPacienteId(),
-                        name,
-                        curp,
-                        phone
-                );
+                try {
+                    Model.getInstance().getMedicoService().actualizarPaciente(
+                            patient.getPacienteId(),
+                            name,
+                            curp,
+                            phone
+                    );
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 System.out.println("Agregando paciente...");
-                ServerModel.getInstance().getDatabaseDriver().agregarPaciente(name, curp, phone, email);
+                try {
+                    Model.getInstance().getMedicoService().agregarPaciente(name, curp, phone, email);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             // close dialog
