@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefWidth="100.0" spacing="10.0">
+        <Label text="Agendar nueva cita" />
+        <DatePicker fx:id="datePicker" />
+        <Label fx:id="dateWarning" textFill="RED" />
+        <VBox>
+            <Label text="Hora" />
+            <HBox>
+            <Spinner fx:id="hourSpinner" editable="true" maxWidth="-Infinity" prefWidth="60.0" />
+                <Label text=":" />
+            <Spinner fx:id="minutesSpinner" editable="true" prefWidth="60.0" />
+            </HBox>
+            <Label fx:id="timeWarning" textFill="RED" />
+        </VBox>
+        <VBox>
+            <Label text="Motivo" />
+            <TextArea fx:id="motivoField" prefHeight="100.0" promptText="Escribe el motivo de la cita..." />
+            <Label fx:id="motivoWarning" textFill="RED" />
+        </VBox>
+        <VBox prefHeight="200.0" prefWidth="100.0">
+            <Label text="Asignar médico" />
+            <ListView fx:id="doctorsListView" prefHeight="200.0" prefWidth="200.0" />
+            <Label fx:id="doctorWarning" textFill="RED" />
+        </VBox>
+        <VBox>
+            <Label text="Seleccionar paciente" />
+            <ListView fx:id="patientsListView" prefHeight="200.0" prefWidth="200.0" />
+            <Label fx:id="patientWarning" textFill="RED" />
+        </VBox>
+        <HBox alignment="CENTER_RIGHT">
+            <Button fx:id="createButton" mnemonicParsing="false" text="Confirmar" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancelar" />
+        </HBox>
+    </VBox>
+</VBox>

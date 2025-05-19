@@ -17,7 +17,7 @@ public class DatabaseDriver {
             connection = DriverManager.getConnection("jdbc:sqlite:schema.db");
             System.out.println("Conectado a la base de datos");
             initializeDatabase();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -26,14 +26,16 @@ public class DatabaseDriver {
         try {
 
             Statement checkStmt = connection.createStatement();
-            ResultSet rs = checkStmt.executeQuery("SELECT COUNT(*) as registros FROM sqlite_master WHERE type='table' AND name IN('medico', 'paciente')");
+            ResultSet rs = checkStmt.executeQuery(
+                    "SELECT COUNT(*) as registros FROM sqlite_master WHERE type='table' AND name IN('medico', " +
+                            "'paciente', 'cita')");
             rs.next();
             int tableExists = rs.getInt("registros");
             rs.close();
 
             checkStmt.close();
 
-            if(tableExists > 0) {
+            if (tableExists > 0) {
                 System.out.println("La base de datos ya está inicializada");
                 return;
             }
@@ -75,15 +77,14 @@ public class DatabaseDriver {
             pstmt.setString(4, correoElectronico);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al agregar médico" , e);
+            throw new RuntimeException("Error al agregar médico", e);
         }
     }
 
     public List<Medico> obtenerMedicos() {
         List<Medico> medicos = new ArrayList<>();
         String sql = "SELECT * FROM medico";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 medicos.add(new Medico(
@@ -101,9 +102,38 @@ public class DatabaseDriver {
         return medicos;
     }
 
-    public void actualizarMedico(int medicoId, String nombre, String especialidad, String cedula, String correoElectronico) {
+    public Medico getMedico(int medicoId) {
+        Medico medico = null;
+        String sql = "SELECT * FROM medico WHERE medico_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, medicoId);
+            ResultSet rs = pstmt.executeQuery();
 
-        String sql = "UPDATE medico SET nombre = ?, especialidad = ?, cedula = ?, correo_electronico = ? WHERE medico_id = ?";
+            while (rs.next()) {
+                medico = new Medico(
+                        rs.getInt("medico_id"),
+                        rs.getString("nombre"),
+                        rs.getString("especialidad"),
+                        rs.getString("cedula"),
+                        rs.getString("correo_electronico")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener médico", e);
+        }
+        return medico;
+    }
+
+    public void actualizarMedico(
+            int medicoId,
+            String nombre,
+            String especialidad,
+            String cedula,
+            String correoElectronico
+    ) {
+
+        String sql = "UPDATE medico SET nombre = ?, especialidad = ?, cedula = ?, correo_electronico = ? WHERE " +
+                "medico_id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
@@ -138,15 +168,15 @@ public class DatabaseDriver {
     , telefono TEXT NOT NULL
     , correo_electronico TEXT NOT NULL
      */
-    public void agregarPaciente(String nombre, String curp, String telefono, String correo_electronico){
+    public void agregarPaciente(String nombre, String curp, String telefono, String correo_electronico) {
         String sql = "INSERT INTO paciente(nombre, curp, telefono, correo_electronico) VALUES (?, ?, ?, ?)";
-        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             pstmt.setString(2, curp);
             pstmt.setString(3, telefono);
             pstmt.setString(4, correo_electronico);
             pstmt.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Error al agregar paciente", e);
         }
     }
@@ -155,7 +185,7 @@ public class DatabaseDriver {
         List<Paciente> pacientes = new ArrayList<>();
         String sql = "SELECT * FROM paciente";
 
-        try(Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)){
+        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 pacientes.add(new Paciente(
                         rs.getInt("paciente_id"),
@@ -165,16 +195,38 @@ public class DatabaseDriver {
                         rs.getString("correo_electronico")
                 ));
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Error al obtener pacientes", e);
         }
         return pacientes;
     }
 
+    public Paciente getPaciente(int pacienteId) {
+        Paciente paciente = null;
+        String sql = "SELECT * FROM paciente WHERE paciente_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, pacienteId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                paciente = new Paciente(
+                        rs.getInt("paciente_id"),
+                        rs.getString("nombre"),
+                        rs.getString("curp"),
+                        rs.getString("telefono"),
+                        rs.getString("correo_electronico")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener médico", e);
+        }
+        return paciente;
+    }
+
     public void actualizarPaciente(int pacienteId, String nombre, String curp, String telefono) {
         String sql = "UPDATE paciente SET nombre = ?, curp = ?, telefono = ? WHERE paciente_id = ?";
 
-        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             pstmt.setString(2, curp);
             pstmt.setString(3, telefono);
@@ -189,7 +241,7 @@ public class DatabaseDriver {
     public void eliminarPaciente(int pacienteId) {
         String sql = "DELETE FROM paciente WHERE paciente_id = ?";
 
-        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, pacienteId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -198,25 +250,26 @@ public class DatabaseDriver {
     }
 
     /* Citas */
-    public void agregarCita(String fechaHora, String motivo, int medicoId, int pacienteId){
+    public void agregarCita(String fechaHora, String motivo, int medicoId, int pacienteId) {
         String sql = "INSERT INTO cita(fecha_hora, motivo, medico_id, paciente_id) VALUES(?, ?, ?, ?)";
 
-        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, fechaHora);
             pstmt.setString(2, motivo);
             pstmt.setInt(3, medicoId);
             pstmt.setInt(4, pacienteId);
 
             pstmt.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Error al agregar paciente", e);
         }
     }
-    public List<Cita> obtenerCitas(){
+
+    public List<Cita> obtenerCitas() {
         List<Cita> citas = new ArrayList<>();
         String sql = "SELECT * FROM cita";
 
-        try(Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)){
+        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 citas.add(new Cita(
                         rs.getInt("cita_id"),
@@ -226,15 +279,15 @@ public class DatabaseDriver {
                         rs.getInt("paciente_id")
                 ));
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Error al obtener pacientes", e);
         }
         return citas;
     }
 
-    public void actualizarCita(int citaId, String fechaHora, String motivo, int medicoId){
+    public void actualizarCita(int citaId, String fechaHora, String motivo, int medicoId) {
         String sql = "UPDATE cita SET fecha_hora = ?, motivo = ?, medico_id = ? WHERE cita_id = ?";
-        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, fechaHora);
             pstmt.setString(2, motivo);
             pstmt.setInt(3, medicoId);
@@ -245,13 +298,14 @@ public class DatabaseDriver {
             throw new RuntimeException("Error al editar cita", e);
         }
     }
+
     public void eliminarCita(int citaId) {
         String sql = "DELETE FROM cita WHERE cita_id = ?";
 
-        try(PreparedStatement stmt = connection.prepareStatement(sql)){
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, citaId);
             stmt.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar paciente", e);
         }
     }

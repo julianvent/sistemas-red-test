@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox>
+        <Label text="Cita"/>
+        <Label fx:id="idLabel" text="1"/>
+    </HBox>
+    <HBox>
+        <Label text="Fecha y hora"/>
+        <HBox>
+            <Label fx:id="dateLabel" text="23/05/2025"/>
+            <Label fx:id="timeLabel" layoutX="10.0" layoutY="10.0" text="12:00"/>
+        </HBox>
+    </HBox>
+    <VBox>
+        <Label text="Motivo de la cita"/>
+        <Label fx:id="motivoLabel" alignment="TOP_LEFT" maxWidth="-Infinity" prefHeight="150.0"
+               prefWidth="400.0"
+               text="Desarrollar una aplicación distribuida que permita la manipulación de datos en una base de datos relacional, utilizando un enfoque cliente/servidor. El servidor será responsable de conectarse y realizar las operaciones sobre la base de datos, mientras que el cliente tendrá una interfaz gráfica (GUI) que interactúe con el servidor para realizar las operaciones CRUD (Crear, Leer, Actualizar, Eliminar)."
+               wrapText="true"/>
+    </VBox>
+    <HBox layoutX="10.0" layoutY="10.0">
+        <VBox>
+            <Label text="Médico asignado"/>
+            <HBox>
+                <Label fx:id="doctorNameLabel" maxWidth="-Infinity" prefWidth="150.0"
+                       text="Nombre del médico"/>
+                <Label fx:id="doctorDegreeLabel" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity"
+                       prefWidth="100.0" text="Especialidad"/>
+            </HBox>
+        </VBox>
+        <VBox layoutX="10.0" layoutY="10.0">
+            <Label text="Paciente"/>
+            <HBox>
+                <Label fx:id="patientNameLabel" maxWidth="-Infinity" prefWidth="150.0"
+                       text="Nombre del paciente"/>
+                <Label fx:id="patientPhoneLabel" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity"
+                       prefWidth="90.0" text="+529211231234"/>
+            </HBox>
+        </VBox>
+    </HBox>
+</VBox>

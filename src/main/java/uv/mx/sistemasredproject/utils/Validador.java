@@ -1,7 +1,5 @@
 package uv.mx.sistemasredproject.utils;
 
-import javafx.scene.control.Label;
-
 import java.util.regex.Pattern;
 
 public class Validador {
@@ -38,14 +36,13 @@ public class Validador {
         //        return VALIDO;
     }
 
-    public static String validateGenericField(String field, Label warning) {
-        boolean isValid = !field.isBlank();
-        if (!isValid) {
-            warning.setVisible(true);
-            warning.setText("Requerido");
-            return warning.getText();
-        }
-        warning.setVisible(false);
+    public static String validateRequiredField(String value) {
+        if (value == null || value.isBlank()) return "Requerido.";
+        return "";
+    }
+
+    public static <T> String validateNull(T value) {
+        if (value == null) return "Requerido.";
         return "";
     }
 }

@@ -9,6 +9,7 @@ import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.model.Medico;
 import uv.mx.sistemasredproject.server.models.ServerModel;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
+import uv.mx.sistemasredproject.utils.Validador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,7 +44,16 @@ public class CreateDoctorController implements Initializable {
         String cedula = cedulaField.getText().trim();
         String email = emailField.getText().trim();
 
-        if (true) {
+        nameWarning.setText(Validador.validateRequiredField(name));
+        degreeWarning.setText(Validador.validateRequiredField(degree));
+        cedulaWarning.setText(Validador.validateRequiredField(cedula));
+        emailWarning.setText(Validador.validarCorreo(email));
+
+        boolean proceed = nameWarning.getText().isBlank() && degreeWarning.getText().isBlank() && cedulaWarning
+                .getText()
+                .isBlank() && emailWarning.getText().isBlank();
+
+        if (proceed) {
             if (medico != null) { // update
                 ServerModel.getInstance().getDatabaseDriver().actualizarMedico(
                         medico.getMedicoId(),
