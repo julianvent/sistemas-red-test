@@ -24,11 +24,27 @@ public class AppointmentViewController implements Initializable {
                 .getInstance()
                 .getDatabaseDriver()
                 .obtenerCitas()));
-        add.setOnAction(actionEvent -> onAdd());
         appointmentListView.setCellFactory(edit -> new AppointmentCellFactory());
+        setCellListener();
+
+        add.setOnAction(actionEvent -> onAdd());
+        edit.setOnAction(actionEvent -> onEdit());
+    }
+
+    private void setCellListener() {
+        appointmentListView.getSelectionModel().selectedItemProperty().addListener((observableValue, cita, selection) ->
+            {
+            edit.setDisable(selection == null);
+            delete.setDisable(selection == null);
+            });
     }
 
     private void onAdd() {
         Model.getInstance().getViewFactory().getCreateAppointmentDialog(null);
+    }
+
+    private void onEdit() {
+        Cita appointment = appointmentListView.getSelectionModel().getSelectedItem();
+        Model.getInstance().getViewFactory().getCreateAppointmentDialog(appointment);
     }
 }

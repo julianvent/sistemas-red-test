@@ -17,6 +17,8 @@ import uv.mx.sistemasredproject.utils.Validador;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class CreateAppointmentController implements Initializable {
@@ -56,6 +58,8 @@ public class CreateAppointmentController implements Initializable {
         minutesSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30, 0, 30));
         createButton.setOnAction(actionEvent -> onCreate());
         cancelButton.setOnAction(actionEvent -> onCancel());
+
+        initializeData();
     }
 
     private void onCreate() {
@@ -107,5 +111,30 @@ public class CreateAppointmentController implements Initializable {
     private void onCancel() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         Model.getInstance().getViewFactory().closeStage(stage);
+    }
+
+    private void initializeData() {
+        if (appointment != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+
+            LocalDateTime dateTime = LocalDateTime.parse(appointment.getFechaHora(), formatter);
+
+            datePicker.setValue(dateTime.toLocalDate());
+            hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                    9,
+                    17,
+                    dateTime.getHour(),
+                    30
+            ));
+            minutesSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                    0,
+                    30,
+                    dateTime.getMinute(),
+                    30
+            ));
+
+            motivoField.setText(appointment.getMotivo());
+            patientsListView.setDisable(true);
+        }
     }
 }
