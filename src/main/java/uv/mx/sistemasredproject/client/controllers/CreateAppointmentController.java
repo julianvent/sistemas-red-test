@@ -73,11 +73,11 @@ public class CreateAppointmentController implements Initializable {
         dateWarning.setText(Validador.validateNull(date));
         motivoWarning.setText(Validador.validateRequiredField(motivo));
         doctorWarning.setText(Validador.validateNull(doctor));
-        patientWarning.setText(Validador.validateNull(patient));
+
 
         boolean proceed = dateWarning.getText().isBlank() && motivoWarning.getText().isBlank() && doctorWarning
                 .getText()
-                .isBlank() && patientWarning.getText().isBlank();
+                .isBlank();
 
         if (proceed) {
             Timestamp timestamp = Timestamp.valueOf(date.atTime(hours, minutes));
@@ -90,6 +90,8 @@ public class CreateAppointmentController implements Initializable {
                         doctor.getMedicoId()
                 );
             } else {
+                patientWarning.setText(Validador.validateNull(patient));
+                if (!patientWarning.getText().isBlank()) return;
                 System.out.println("Creando cita...");
                 ServerModel.getInstance().getDatabaseDriver().agregarCita(
                         timestamp.toString(),
