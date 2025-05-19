@@ -1,4 +1,4 @@
-package uv.mx.sistemasredproject.server.models;
+package uv.mx.sistemasredproject.model;
 
 
 import javafx.beans.property.*;

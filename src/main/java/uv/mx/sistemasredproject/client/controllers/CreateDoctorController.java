@@ -1,19 +1,17 @@
-package uv.mx.sistemasredproject.controllers;
+package uv.mx.sistemasredproject.client.controllers;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import uv.mx.sistemasredproject.model.Model;
-import uv.mx.sistemasredproject.server.models.Medico;
+import uv.mx.sistemasredproject.client.model.Model;
+import uv.mx.sistemasredproject.model.Medico;
 import uv.mx.sistemasredproject.server.models.ServerModel;
-import uv.mx.sistemasredproject.views.SubmenuOptions;
+import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static uv.mx.sistemasredproject.utils.Validador.validateField;
 
 public class CreateDoctorController implements Initializable {
     private final Medico medico;
@@ -45,12 +43,7 @@ public class CreateDoctorController implements Initializable {
         String cedula = cedulaField.getText().trim();
         String email = emailField.getText().trim();
 
-        boolean proceed = validateField(name, nameWarning);
-        proceed &= validateField(degree, degreeWarning);
-        proceed &= validateField(cedula, cedulaWarning);
-        proceed &= validateField(email, emailWarning);
-
-        if (proceed) {
+        if (true) {
             if (medico != null) { // update
                 ServerModel.getInstance().getDatabaseDriver().actualizarMedico(
                         medico.getMedicoId(),

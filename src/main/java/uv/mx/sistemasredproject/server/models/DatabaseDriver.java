@@ -1,9 +1,12 @@
 package uv.mx.sistemasredproject.server.models;
 
+import uv.mx.sistemasredproject.model.Cita;
+import uv.mx.sistemasredproject.model.Medico;
+import uv.mx.sistemasredproject.model.Paciente;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class DatabaseDriver {
 

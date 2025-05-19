@@ -1,4 +1,4 @@
-package uv.mx.sistemasredproject.views;
+package uv.mx.sistemasredproject.client.views;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -7,9 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import uv.mx.sistemasredproject.controllers.ClientController;
-import uv.mx.sistemasredproject.controllers.CreateDoctorController;
-import uv.mx.sistemasredproject.server.models.Medico;
+import uv.mx.sistemasredproject.client.controllers.ClientController;
+import uv.mx.sistemasredproject.client.controllers.CreateDoctorController;
+import uv.mx.sistemasredproject.client.controllers.CreatePatientController;
+import uv.mx.sistemasredproject.model.Medico;
+import uv.mx.sistemasredproject.model.Paciente;
 
 import java.io.IOException;
 
@@ -88,10 +90,38 @@ public class ViewFactory {
         }
     }
 
-    public void showCreateDoctorView(Medico medico) {
+    public void getCreateDoctorDialog(Medico medico) {
         Dialog<String> dialog = new Dialog<>();
         if (medico != null) dialog.getDialogPane().setContent(getCreateDoctorView(medico));
         else dialog.getDialogPane().setContent(getCreateDoctorView(null));
+        dialog.show();
+    }
+
+
+    // patients
+    public VBox getPatientsView() {
+        try {
+            return createLoader("patient-view.fxml").load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private VBox getCreatePatientView(Paciente patient) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create-patient.fxml"));
+            CreatePatientController controller = new CreatePatientController(patient);
+            loader.setController(controller);
+            return loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void getCreatePatientDialog(Paciente patient) {
+        Dialog<String> dialog = new Dialog<>();
+        if (patient != null) dialog.getDialogPane().setContent(getCreatePatientView(patient));
+        else dialog.getDialogPane().setContent(getCreatePatientView(null));
         dialog.show();
     }
 }

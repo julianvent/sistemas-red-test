@@ -1,8 +1,8 @@
-package uv.mx.sistemasredproject.controllers;
+package uv.mx.sistemasredproject.client.controllers;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import uv.mx.sistemasredproject.server.models.Medico;
+import uv.mx.sistemasredproject.model.Medico;
 
 import java.net.URL;
 import java.util.ResourceBundle;

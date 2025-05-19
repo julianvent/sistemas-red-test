@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefWidth="100.0" spacing="10.0">
+        <Label text="Agregar nuevo paciente" />
+        <VBox>
+            <HBox>
+                <Label text="Nombre" />
+                <TextField fx:id="nameField" promptText="Nombre del paciente" />
+            </HBox>
+            <Label fx:id="nameWarning" textFill="RED" />
+        </VBox>
+        <VBox>
+            <HBox prefWidth="200.0">
+                <Label text="CURP" />
+                <TextField fx:id="curpField" promptText="CURP" />
+            </HBox>
+            <Label fx:id="curpWarning" textFill="RED" />
+        </VBox>
+        <VBox>
+            <HBox prefWidth="200.0">
+                <Label text="Teléfono" />
+                <TextField fx:id="phoneField" promptText="Teléfono" />
+            </HBox>
+            <Label fx:id="phoneWarning" textFill="RED" />
+        </VBox>
+        <VBox>
+            <HBox prefWidth="200.0">
+                <Label text="Correo electrónico" />
+                <TextField fx:id="emailField" promptText="losquesaben@gmail.com" />
+            </HBox>
+            <Label fx:id="emailWarning" textFill="RED" />
+        </VBox>
+        <HBox alignment="CENTER_RIGHT">
+            <Button fx:id="createButton" mnemonicParsing="false" text="Confirmar" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancelar" />
+        </HBox>
+    </VBox>
+</VBox>

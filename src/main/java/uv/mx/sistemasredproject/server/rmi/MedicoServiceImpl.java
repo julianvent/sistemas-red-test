@@ -1,6 +1,9 @@
 package uv.mx.sistemasredproject.server.rmi;
 
 import uv.mx.sistemasredproject.interfaces.IMedicoService;
+import uv.mx.sistemasredproject.model.Cita;
+import uv.mx.sistemasredproject.model.Medico;
+import uv.mx.sistemasredproject.model.Paciente;
 import uv.mx.sistemasredproject.server.models.*;
 
 import java.rmi.RemoteException;

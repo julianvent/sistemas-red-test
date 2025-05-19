@@ -1,8 +1,8 @@
-package uv.mx.sistemasredproject.controllers;
+package uv.mx.sistemasredproject.client.controllers;
 
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
-import uv.mx.sistemasredproject.model.Model;
+import uv.mx.sistemasredproject.client.model.Model;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +20,7 @@ public class ClientController implements Initializable {
                     {
                     switch (newValue) {
                         case DOCTORS -> clientParent.setCenter(Model.getInstance().getViewFactory().getDoctorsView());
+                        case PATIENTS -> clientParent.setCenter(Model.getInstance().getViewFactory().getPatientsView());
                         default -> clientParent.setCenter(Model.getInstance().getViewFactory().getRefresh());
                     }
                     });

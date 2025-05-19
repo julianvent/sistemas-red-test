@@ -1,23 +1,23 @@
-package uv.mx.sistemasredproject.views;
+package uv.mx.sistemasredproject.client.views;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
-import uv.mx.sistemasredproject.controllers.DoctorCellController;
-import uv.mx.sistemasredproject.server.models.Medico;
+import uv.mx.sistemasredproject.client.controllers.PatientCellController;
+import uv.mx.sistemasredproject.model.Paciente;
 
 import java.io.IOException;
 
-public class DoctorCellFactory extends ListCell<Medico> {
+public class PatientCellFactory extends ListCell<Paciente> {
     @Override
-    protected void updateItem(Medico item, boolean empty) {
+    protected void updateItem(Paciente item, boolean empty) {
         super.updateItem(item, empty);
 
         if (empty) {
             setText(null);
             setGraphic(null);
         } else {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/doctor-cell.fxml"));
-            DoctorCellController controller = new DoctorCellController(item);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/patient-cell.fxml"));
+            PatientCellController controller = new PatientCellController(item);
             loader.setController(controller);
             setText(null);
 

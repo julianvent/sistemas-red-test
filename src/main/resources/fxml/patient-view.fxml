@@ -5,7 +5,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0"
       prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="uv.mx.sistemasredproject.controllers.PatientViewController">
+      fx:controller="uv.mx.sistemasredproject.client.controllers.PatientViewController">
    <VBox prefWidth="100.0">
       <BorderPane>
          <left>

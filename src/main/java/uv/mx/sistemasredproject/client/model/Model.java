@@ -1,6 +1,6 @@
-package uv.mx.sistemasredproject.model;
+package uv.mx.sistemasredproject.client.model;
 
-import uv.mx.sistemasredproject.views.ViewFactory;
+import uv.mx.sistemasredproject.client.views.ViewFactory;
 
 public class Model {
     private static Model model;

@@ -1,13 +1,13 @@
-package uv.mx.sistemasredproject.controllers;
+package uv.mx.sistemasredproject.client.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import uv.mx.sistemasredproject.model.Model;
-import uv.mx.sistemasredproject.server.models.Medico;
+import uv.mx.sistemasredproject.client.model.Model;
+import uv.mx.sistemasredproject.model.Medico;
 import uv.mx.sistemasredproject.server.models.ServerModel;
-import uv.mx.sistemasredproject.views.DoctorCellFactory;
-import uv.mx.sistemasredproject.views.SubmenuOptions;
+import uv.mx.sistemasredproject.client.views.DoctorCellFactory;
+import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 
 import java.net.URL;
 import java.util.Optional;
@@ -34,7 +34,7 @@ public class DoctorViewController implements Initializable {
     }
 
     private void onAddDoctor() {
-        Model.getInstance().getViewFactory().showCreateDoctorView(null);
+        Model.getInstance().getViewFactory().getCreateDoctorDialog(null);
     }
 
     private void addCellListener() {
@@ -47,7 +47,7 @@ public class DoctorViewController implements Initializable {
 
     private void onEditDoctor() {
         Medico medico = doctorListView.getSelectionModel().getSelectedItem();
-        Model.getInstance().getViewFactory().showCreateDoctorView(medico);
+        Model.getInstance().getViewFactory().getCreateDoctorDialog(medico);
     }
 
     private void onDeleteDoctor() {
