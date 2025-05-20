@@ -56,6 +56,11 @@
     -fx-background-color: none;
 }
 
+.spinner-container {
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+}
+
 .field-container .spinner {
     -fx-background-color: none;
     -fx-pref-width: 80;

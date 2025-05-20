@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox styleClass="container" stylesheets="@../styles/create-doctor.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<VBox styleClass="container" stylesheets="@../styles/create-doctor.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <VBox styleClass="field-container">
       <children>
            <Label text="Agendar nueva cita" />
@@ -19,7 +13,7 @@
    </VBox>
      <VBox styleClass="field-container">
          <Label text="Hora" />
-         <HBox>
+         <HBox alignment="CENTER_LEFT" styleClass="spinner-container">
          <Spinner fx:id="hourSpinner" editable="true" />
              <Label text=":" />
          <Spinner fx:id="minutesSpinner" editable="true" />

@@ -4,9 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import uv.mx.sistemasredproject.client.model.Model;
-import uv.mx.sistemasredproject.client.views.CustomDoctorCellFactory;
-import uv.mx.sistemasredproject.client.views.CustomPatientCellFactory;
-import uv.mx.sistemasredproject.client.views.SubmenuOptions;
+import uv.mx.sistemasredproject.client.views.*;
 import uv.mx.sistemasredproject.model.Appointment;
 import uv.mx.sistemasredproject.model.Doctor;
 import uv.mx.sistemasredproject.model.Patient;
@@ -50,8 +48,14 @@ public class CreateAppointmentController implements Initializable {
 
         hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(9, 17));
         minutesSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 30, 0, 30));
+
         createButton.setOnAction(actionEvent -> onCreate());
         cancelButton.setOnAction(actionEvent -> onCancel());
+
+        datePicker.setEditable(false);
+        datePicker.setDayCellFactory(e -> new DateCellFactory());
+        hourSpinner.setEditable(false);
+        minutesSpinner.setEditable(false);
 
         initializeData();
     }
@@ -75,7 +79,6 @@ public class CreateAppointmentController implements Initializable {
 
         dateWarning.setText(Validador.validateNull(date));
         motivoWarning.setText(Validador.validateRequiredField(motivo));
-
 
         boolean proceed = dateWarning.getText().isBlank() && motivoWarning.getText().isBlank();
 
