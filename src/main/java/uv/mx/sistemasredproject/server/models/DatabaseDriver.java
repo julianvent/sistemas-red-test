@@ -69,7 +69,7 @@ public class DatabaseDriver {
     /* Médicos */
 
     public void agregarMedico(String nombre, String especialidad, String cedula, String correoElectronico) {
-        String sql = "INSERT INTO medico (nombre, especialidad, cedula, correo_electronico) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO medico (nombre, especialidad, cedula, correo_electronico, eliminado) VALUES (?, ?, ?, ?, 0)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             pstmt.setString(2, especialidad);
@@ -83,8 +83,7 @@ public class DatabaseDriver {
 
     public List<Doctor> obtenerMedicos() {
         List<Doctor> doctors = new ArrayList<>();
-        System.out.println("Obteniendo medicos");
-        String sql = "SELECT * FROM medico";
+        String sql = "SELECT * FROM medico WHERE eliminado = 0 ";
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -152,7 +151,7 @@ public class DatabaseDriver {
 
     public void eliminarMedico(int medicoId) {
 
-        String sql = "DELETE FROM medico WHERE medico_id = ?";
+        String sql = "UPDATE medico SET eliminado = 1 WHERE medico_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, medicoId);
             pstmt.executeUpdate();
@@ -161,16 +160,8 @@ public class DatabaseDriver {
         }
     }
 
-    /* Paciente */
-    /*
-        paciente_id INTEGER PRIMARY KEY AUTOINCREMENT
-    , nombre TEXT NOT NULL
-    , curp TEXT NOT NULL UNIQUE
-    , telefono TEXT NOT NULL
-    , correo_electronico TEXT NOT NULL
-     */
     public void agregarPaciente(String nombre, String curp, String telefono, String correo_electronico) {
-        String sql = "INSERT INTO paciente(nombre, curp, telefono, correo_electronico) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO paciente(nombre, curp, telefono, correo_electronico, eliminado) VALUES (?, ?, ?, ?, 0)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             pstmt.setString(2, curp);
@@ -184,7 +175,7 @@ public class DatabaseDriver {
 
     public List<Patient> obtenerPacientes() {
         List<Patient> patients = new ArrayList<>();
-        String sql = "SELECT * FROM paciente";
+        String sql = "SELECT * FROM paciente WHERE eliminado = 0";
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -240,7 +231,7 @@ public class DatabaseDriver {
     }
 
     public void eliminarPaciente(int pacienteId) {
-        String sql = "DELETE FROM paciente WHERE paciente_id = ?";
+        String sql = "UPDATE paciente SET eliminado = 1 WHERE paciente_id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, pacienteId);

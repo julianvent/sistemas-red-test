@@ -12,6 +12,7 @@ public class Doctor implements Serializable {
     private String degree;
     private String cedula;
     private String email;
+    private Boolean eliminado;
 
     public Doctor(int id, String name, String degree, String cedula, String email) {
         this.id = id;
@@ -19,6 +20,7 @@ public class Doctor implements Serializable {
         this.degree = degree;
         this.cedula = cedula;
         this.email = email;
+        this.eliminado = false;
     }
 
     public int getId() {
@@ -59,5 +61,13 @@ public class Doctor implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
     }
 }
