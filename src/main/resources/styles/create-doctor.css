@@ -51,3 +51,46 @@
     -fx-font-size: 14;
     -fx-text-fill: red;
 }
+
+.field-container .date-picker {
+    -fx-background-color: none;
+}
+
+.field-container .spinner {
+    -fx-background-color: none;
+    -fx-pref-width: 80;
+    -fx-text-alignment: center;
+}
+
+.field-container .text-area {
+    -fx-background-color: transparent;
+    -fx-pref-height: 100;
+    -fx-border-color: grey;
+    -fx-border-radius: 12;
+
+    -fx-font-size: 14;
+}
+
+.list-view {
+    -fx-pref-height: 170;
+    -fx-border-width: 0;
+    -fx-background-radius: 12;
+    -fx-padding: 10;
+    -fx-background-color: #FFFFFF;
+    -fx-alignment: center;
+}
+
+.list-view .list-cell {
+    -fx-padding: 10 10 15;
+    -fx-background-insets: 5;
+    -fx-background-color: none;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #EEEEEE;
+    -fx-background-radius: 12;
+}
+
+.list-view .list-cell:selected .label {
+    -fx-text-fill: black;
+}

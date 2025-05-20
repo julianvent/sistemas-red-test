@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-    <HBox>
-        <Label text="Cita" />
-        <Label fx:id="idLabel" text="1" />
+<VBox styleClass="appointment-cell" stylesheets="@../styles/doctor-cell.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox styleClass="appointment-label-container">
+        <Label styleClass="appointment-title" text="Cita" />
+        <Label fx:id="idLabel" styleClass="appointment-title" text="1" />
     </HBox>
-    <HBox>
-        <Label text="Fecha y hora" />
-        <HBox>
-            <Label fx:id="dateLabel" text="23/05/2025" />
-        </HBox>
+    <HBox styleClass="appointment-label-container">
+        <Label styleClass="appointment-label" text="Fecha y hora:" />
+         <Label fx:id="dateLabel" text="23/05/2025" />
     </HBox>
-    <VBox>
-        <Label text="Motivo de la cita" />
-        <Label fx:id="motivoLabel" alignment="TOP_LEFT" maxWidth="-Infinity" prefHeight="150.0" prefWidth="400.0" text="Desarrollar una aplicación distribuida que permita la manipulación de datos en una base de datos relacional, utilizando un enfoque cliente/servidor. El servidor será responsable de conectarse y realizar las operaciones sobre la base de datos, mientras que el cliente tendrá una interfaz gráfica (GUI) que interactúe con el servidor para realizar las operaciones CRUD (Crear, Leer, Actualizar, Eliminar)." wrapText="true" />
+    <VBox styleClass="appointment-label-container">
+        <Label styleClass="appointment-label" text="Motivo de la cita:" />
+        <Label fx:id="motivoLabel" alignment="TOP_LEFT" styleClass="appointment-motivo" text="Desarrollar una aplicación distribuida que permita la manipulación de datos en una base de datos relacional, utilizando un enfoque cliente/servidor. El servidor será responsable de conectarse y realizar las operaciones sobre la base de datos, mientras que el cliente tendrá una interfaz gráfica (GUI) que interactúe con el servidor para realizar las operaciones CRUD (Crear, Leer, Actualizar, Eliminar)." wrapText="true" />
     </VBox>
-    <HBox layoutX="10.0" layoutY="10.0">
-        <VBox>
-            <Label text="Médico asignado" />
-            <HBox>
-                <Label fx:id="doctorNameLabel" maxWidth="-Infinity" prefWidth="150.0" text="Nombre del médico" />
-                <Label fx:id="doctorDegreeLabel" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" prefWidth="100.0" text="Especialidad" />
+    <HBox layoutX="10.0" layoutY="10.0" styleClass="appointment-data-container">
+        <VBox styleClass="appointment-label-container">
+            <Label styleClass="appointment-label" text="Médico asignado:" />
+            <HBox styleClass="appointment-label-container">
+                <Label fx:id="doctorNameLabel" styleClass="appointment-name" text="Nombre del médico" />
+                <Label fx:id="doctorDegreeLabel" layoutX="10.0" layoutY="10.0" styleClass="degree" text="Especialidad" />
             </HBox>
         </VBox>
-        <VBox layoutX="10.0" layoutY="10.0">
-            <Label text="Paciente" />
-            <HBox>
-                <Label fx:id="patientNameLabel" maxWidth="-Infinity" prefWidth="150.0" text="Nombre del patient" />
-                <Label fx:id="patientPhoneLabel" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" prefWidth="90.0" text="+529211231234" />
+        <VBox layoutX="10.0" layoutY="10.0" styleClass="appointment-label-container">
+            <Label styleClass="appointment-label" text="Paciente:" />
+            <HBox styleClass="appointment-label-container">
+                <Label fx:id="patientNameLabel" styleClass="appointment-name" text="Nombre del paciente" />
+                <Label fx:id="patientPhoneLabel" layoutX="10.0" layoutY="10.0" styleClass="degree" text="+529211231234" />
             </HBox>
         </VBox>
     </HBox>

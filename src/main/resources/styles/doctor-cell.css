@@ -32,3 +32,52 @@
 .email {
     -fx-pref-width: 180;
 }
+
+.appointment-cell {
+    -fx-padding: 30 20;
+    -fx-alignment: center;
+    -fx-spacing: 25;
+    -fx-pref-width: 900;
+
+    -fx-background-radius: 12;
+    -fx-background-color: #eef5ff;
+}
+
+.appointment-label-container {
+    -fx-spacing: 10;
+}
+
+.appointment-cell Label {
+    -fx-font-size: 14;
+}
+
+.appointment-title {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+}
+
+.appointment-label {
+    -fx-font-weight: bold;
+}
+
+.appointment-motivo {
+    -fx-max-height: 250;
+}
+
+.appointment-data-container {
+    -fx-spacing: 50;
+}
+
+.appointment-name {
+    -fx-pref-width: 200;
+}
+
+.custom-cell {
+    -fx-padding: 15 20;
+    -fx-alignment: center;
+    -fx-spacing: 30;
+    -fx-pref-width: 500;
+
+    -fx-background-radius: 12;
+    -fx-background-color: #eef5ff;
+}

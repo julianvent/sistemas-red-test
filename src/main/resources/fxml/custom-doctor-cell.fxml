@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" spacing="30.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-    <padding>
-        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-    </padding>
-    <Label fx:id="nameLabel" maxWidth="150.0" prefWidth="150.0" text="Jose Julian Ventura Uscanga" textAlignment="RIGHT" />
-    <Label fx:id="degreeLabel" maxWidth="150.0" prefWidth="150.0" text="Traumatología y Ortopedia" textAlignment="RIGHT" />
+<HBox alignment="CENTER" styleClass="custom-cell" stylesheets="@../styles/doctor-cell.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+    <Label fx:id="nameLabel" styleClass="name" text="Jose Julian Ventura Uscanga" textAlignment="RIGHT" />
+    <Label fx:id="degreeLabel" styleClass="degree" text="Traumatología y Ortopedia" textAlignment="RIGHT" />
 </HBox>
