@@ -3,13 +3,13 @@ package uv.mx.sistemasredproject.client.views;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 import uv.mx.sistemasredproject.client.controllers.CustomDoctorCellController;
-import uv.mx.sistemasredproject.model.Medico;
+import uv.mx.sistemasredproject.model.Doctor;
 
 import java.io.IOException;
 
-public class CustomDoctorCellFactory extends ListCell<Medico> {
+public class CustomDoctorCellFactory extends ListCell<Doctor> {
     @Override
-    protected void updateItem(Medico item, boolean empty) {
+    protected void updateItem(Doctor item, boolean empty) {
         super.updateItem(item, empty);
 
         if (empty) {

@@ -1,6 +1,5 @@
 package uv.mx.sistemasredproject.client.controllers;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -8,7 +7,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
-import uv.mx.sistemasredproject.model.Paciente;
+import uv.mx.sistemasredproject.model.Patient;
 import uv.mx.sistemasredproject.client.views.PatientCellFactory;
 
 import java.net.URL;
@@ -20,23 +19,23 @@ public class PatientViewController implements Initializable {
     public Button add;
     public Button edit;
     public Button delete;
-    public ListView<Paciente> patientsListView;
+    public ListView<Patient> patientsListView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            patientsListView.setItems(FXCollections.observableList(Model
-                    .getInstance()
-                    .getMedicoService()
-                    .listarPacientes()));
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        initializePatientList();
+        patientsListView.setItems(Model.getInstance().getPatientList());
         patientsListView.setCellFactory(e -> new PatientCellFactory());
         addCellListener();
         add.setOnAction(actionEvent -> onAdd());
         edit.setOnAction(actionEvent -> onEdit());
         delete.setOnAction(actionEvent -> onDelete());
+    }
+
+    private void initializePatientList() {
+        if (Model.getInstance().getPatientList().isEmpty()) {
+            Model.getInstance().setAllPatients();
+        }
     }
 
     private void addCellListener() {
@@ -52,28 +51,29 @@ public class PatientViewController implements Initializable {
     }
 
     private void onEdit() {
-        Paciente patient = patientsListView.getSelectionModel().getSelectedItem();
+        Patient patient = patientsListView.getSelectionModel().getSelectedItem();
         Model.getInstance().getViewFactory().getCreatePatientDialog(patient);
     }
 
     private void onDelete() {
-        Paciente patient = patientsListView.getSelectionModel().getSelectedItem();
+        Patient patient = patientsListView.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Eliminar registro de paciente");
-        alert.setHeaderText("Remover a " + patient.getNombre());
+        alert.setHeaderText("Remover a " + patient.getName());
         alert.setContentText("¿Estás seguro de eliminar el registro?");
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            System.out.println("Eliminando a " + patient.getNombre());
+            System.out.println("Eliminando a " + patient.getName());
             try {
-                Model.getInstance().getMedicoService().eliminarPaciente(patient.getPacienteId());
+                Model.getInstance().getMedicoService().deletePatient(patient.getId());
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
 
             // refresh view
+            Model.getInstance().setAllPatients();
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.PATIENTS);
         }

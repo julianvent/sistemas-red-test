@@ -1,10 +1,9 @@
 package uv.mx.sistemasredproject.client.controllers;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import uv.mx.sistemasredproject.client.model.Model;
-import uv.mx.sistemasredproject.model.Medico;
+import uv.mx.sistemasredproject.model.Doctor;
 import uv.mx.sistemasredproject.client.views.DoctorCellFactory;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 
@@ -18,24 +17,23 @@ public class DoctorViewController implements Initializable {
     public Button editDoctor;
     public Button deleteDoctor;
 
-    public ListView<Medico> doctorListView;
+    public ListView<Doctor> doctorListView;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            doctorListView.setItems(FXCollections.observableList(Model
-                    .getInstance()
-                    .getMedicoService()
-                    .listarMedicos()));
-        } catch (RemoteException e) {
-            System.out.println("Error al listar medicos");
-            throw new RuntimeException(e);
-        }
+        initializeAllDoctors();
+        doctorListView.setItems(Model.getInstance().getDoctorList());
         doctorListView.setCellFactory(e -> new DoctorCellFactory());
         addCellListener();
         addDoctor.setOnAction(actionEvent -> onAddDoctor());
         editDoctor.setOnAction(actionEvent -> onEditDoctor());
         deleteDoctor.setOnAction(actionEvent -> onDeleteDoctor());
+    }
+
+    private void initializeAllDoctors() {
+        if (Model.getInstance().getDoctorList().isEmpty()) {
+            Model.getInstance().setAllDoctors();
+        }
     }
 
     private void onAddDoctor() {
@@ -51,27 +49,28 @@ public class DoctorViewController implements Initializable {
     }
 
     private void onEditDoctor() {
-        Medico medico = doctorListView.getSelectionModel().getSelectedItem();
-        Model.getInstance().getViewFactory().getCreateDoctorDialog(medico);
+        Doctor doctor = doctorListView.getSelectionModel().getSelectedItem();
+        Model.getInstance().getViewFactory().getCreateDoctorDialog(doctor);
     }
 
     private void onDeleteDoctor() {
-        Medico medico = doctorListView.getSelectionModel().getSelectedItem();
+        Doctor doctor = doctorListView.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Eliminar un doctor");
-        alert.setHeaderText("Remover a Dr. " + medico.getNombre());
+        alert.setHeaderText("Remover a Dr. " + doctor.getName());
         alert.setContentText("¿Estás seguro de eliminar el registro?");
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                Model.getInstance().getMedicoService().eliminarMedico(medico.getMedicoId());
+                Model.getInstance().getMedicoService().deleteDoctor(doctor.getId());
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
 
             // refresh view
+            Model.getInstance().setAllDoctors();
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.DOCTORS);
         }

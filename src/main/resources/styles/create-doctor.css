@@ -1,0 +1,53 @@
+.container {
+    -fx-padding: 20;
+    -fx-pref-width: 600;
+    -fx-spacing: 20;
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+}
+
+.title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+
+.field-container {
+    -fx-spacing: 5;
+    -fx-alignment: center-left;
+}
+
+.field-container .label {
+    -fx-font-size: 14;
+}
+
+.field-container .text-field {
+    -fx-background-color: none;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: grey;
+    -fx-font-size: 14;
+    -fx-max-width: 300;
+}
+
+.button-container {
+    -fx-spacing: 20;
+    -fx-alignment: center-right;
+}
+
+.button-container .button {
+    -fx-background-color: #699ae4;
+    -fx-background-radius: 8;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-padding: 7 30;
+}
+
+.button-container .cancel-button {
+    -fx-background-color: #EEEEEE;
+    -fx-text-fill: black;
+}
+
+.warning {
+    -fx-font-size: 14;
+    -fx-text-fill: red;
+}

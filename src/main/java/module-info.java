@@ -14,4 +14,5 @@ module uv.mx.sistemasredproject {
     exports uv.mx.sistemasredproject.server.rmi;
     exports uv.mx.sistemasredproject.server.models;
     exports uv.mx.sistemasredproject.model;
+    exports uv.mx.sistemasredproject.client.model;
 }

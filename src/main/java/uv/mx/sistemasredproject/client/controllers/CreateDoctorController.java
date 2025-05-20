@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import uv.mx.sistemasredproject.client.model.Model;
-import uv.mx.sistemasredproject.model.Medico;
+import uv.mx.sistemasredproject.model.Doctor;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 import uv.mx.sistemasredproject.utils.Validador;
 
@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class CreateDoctorController implements Initializable {
-    private final Medico medico;
+    private final Doctor doctor;
     public Button createButton;
     public Button cancelButton;
     public TextField nameField;
@@ -27,8 +27,8 @@ public class CreateDoctorController implements Initializable {
     public Label cedulaWarning;
     public Label emailWarning;
 
-    public CreateDoctorController(Medico medico) {
-        this.medico = medico;
+    public CreateDoctorController(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     @Override
@@ -54,10 +54,10 @@ public class CreateDoctorController implements Initializable {
                 .isBlank() && emailWarning.getText().isBlank();
 
         if (proceed) {
-            if (medico != null) { // update
+            if (doctor != null) { // update
                 try {
-                    Model.getInstance().getMedicoService().actualizarMedico(
-                            medico.getMedicoId(),
+                    Model.getInstance().getMedicoService().updateDoctor(
+                            doctor.getId(),
                             name,
                             degree,
                             cedula,
@@ -68,7 +68,7 @@ public class CreateDoctorController implements Initializable {
                 }
             } else { // create
                 try {
-                    Model.getInstance().getMedicoService().agregarMedico(name, degree, cedula, email);
+                    Model.getInstance().getMedicoService().addDoctor(name, degree, cedula, email);
                 } catch (RemoteException e) {
                     throw new RuntimeException("Error del servidor al actualizar medico", e);
                 }
@@ -79,6 +79,7 @@ public class CreateDoctorController implements Initializable {
             Model.getInstance().getViewFactory().closeStage(stage);
 
             // refresh view
+            Model.getInstance().setAllDoctors();
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.DOCTORS);
         }
@@ -90,11 +91,11 @@ public class CreateDoctorController implements Initializable {
     }
 
     private void initializeData() {
-        if (medico != null) {
-            nameField.setText(medico.getNombre());
-            degreeField.setText(medico.getEspecialidad());
-            cedulaField.setText(medico.getCedula());
-            emailField.setText(medico.getCorreoElectronico());
+        if (doctor != null) {
+            nameField.setText(doctor.getName());
+            degreeField.setText(doctor.getDegree());
+            cedulaField.setText(doctor.getCedula());
+            emailField.setText(doctor.getEmail());
         }
     }
 }

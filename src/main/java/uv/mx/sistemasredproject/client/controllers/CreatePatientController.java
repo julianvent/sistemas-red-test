@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
-import uv.mx.sistemasredproject.model.Paciente;
+import uv.mx.sistemasredproject.model.Patient;
 import uv.mx.sistemasredproject.utils.Validador;
 
 import java.net.URL;
@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class CreatePatientController implements Initializable {
-    final Paciente patient;
+    final Patient patient;
     public TextField nameField;
     public Label nameWarning;
     public TextField curpField;
@@ -27,7 +27,7 @@ public class CreatePatientController implements Initializable {
     public Button createButton;
     public Button cancelButton;
 
-    public CreatePatientController(Paciente patient) {
+    public CreatePatientController(Patient patient) {
         this.patient = patient;
     }
 
@@ -51,14 +51,13 @@ public class CreatePatientController implements Initializable {
         boolean proceed = curpWarning.getText().isBlank() && phoneWarning.getText().isBlank() && emailWarning
                 .getText()
                 .isBlank();
-        System.out.println((proceed) ? "OK " : "ABORT " + curpWarning.getText());
 
         if (proceed) {
             if (patient != null) {
                 System.out.println("Actualizando paciente...");
                 try {
-                    Model.getInstance().getMedicoService().actualizarPaciente(
-                            patient.getPacienteId(),
+                    Model.getInstance().getMedicoService().updatePatient(
+                            patient.getId(),
                             name,
                             curp,
                             phone
@@ -69,7 +68,7 @@ public class CreatePatientController implements Initializable {
             } else {
                 System.out.println("Agregando paciente...");
                 try {
-                    Model.getInstance().getMedicoService().agregarPaciente(name, curp, phone, email);
+                    Model.getInstance().getMedicoService().addPatient(name, curp, phone, email);
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
@@ -80,6 +79,7 @@ public class CreatePatientController implements Initializable {
             Model.getInstance().getViewFactory().closeStage(stage);
 
             // refresh view
+            Model.getInstance().setAllPatients();
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.PATIENTS);
         }
@@ -92,10 +92,10 @@ public class CreatePatientController implements Initializable {
 
     private void initializeData() {
         if (patient != null) {
-            nameField.setText(patient.getNombre());
+            nameField.setText(patient.getName());
             curpField.setText(patient.getCurp());
-            phoneField.setText(patient.getTelefono());
-            emailField.setText(patient.getCorreoElectronico());
+            phoneField.setText(patient.getPhone());
+            emailField.setText(patient.getEmail());
         }
     }
 }

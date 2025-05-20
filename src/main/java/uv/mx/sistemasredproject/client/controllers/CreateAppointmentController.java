@@ -1,6 +1,5 @@
 package uv.mx.sistemasredproject.client.controllers;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -8,9 +7,9 @@ import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.client.views.CustomDoctorCellFactory;
 import uv.mx.sistemasredproject.client.views.CustomPatientCellFactory;
 import uv.mx.sistemasredproject.client.views.SubmenuOptions;
-import uv.mx.sistemasredproject.model.Cita;
-import uv.mx.sistemasredproject.model.Medico;
-import uv.mx.sistemasredproject.model.Paciente;
+import uv.mx.sistemasredproject.model.Appointment;
+import uv.mx.sistemasredproject.model.Doctor;
+import uv.mx.sistemasredproject.model.Patient;
 import uv.mx.sistemasredproject.utils.Validador;
 
 import java.net.URL;
@@ -22,13 +21,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class CreateAppointmentController implements Initializable {
-    private final Cita appointment;
+    private final Appointment appointment;
     public DatePicker datePicker;
     public Spinner<Integer> hourSpinner;
     public Spinner<Integer> minutesSpinner;
     public TextArea motivoField;
-    public ListView<Medico> doctorsListView;
-    public ListView<Paciente> patientsListView;
+    public ListView<Doctor> doctorsListView;
+    public ListView<Patient> patientsListView;
     public Button createButton;
     public Button cancelButton;
     public Label dateWarning;
@@ -36,30 +35,17 @@ public class CreateAppointmentController implements Initializable {
     public Label doctorWarning;
     public Label patientWarning;
 
-    public CreateAppointmentController(Cita appointment) {
+    public CreateAppointmentController(Appointment appointment) {
         this.appointment = appointment;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            doctorsListView.setItems(FXCollections.observableList(Model
-                    .getInstance()
-                    .getMedicoService()
-                    .listarMedicos()));
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        initializeLists();
+        doctorsListView.setItems(Model.getInstance().getDoctorList());
         doctorsListView.setCellFactory(e -> new CustomDoctorCellFactory());
 
-        try {
-            patientsListView.setItems(FXCollections.observableList(Model
-                    .getInstance()
-                    .getMedicoService()
-                    .listarPacientes()));
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        patientsListView.setItems(Model.getInstance().getPatientList());
         patientsListView.setCellFactory(e -> new CustomPatientCellFactory());
 
         hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(9, 17));
@@ -70,13 +56,22 @@ public class CreateAppointmentController implements Initializable {
         initializeData();
     }
 
+    private void initializeLists() {
+        if (Model.getInstance().getPatientList().isEmpty()) {
+            Model.getInstance().setAllPatients();
+        }
+        if (Model.getInstance().getDoctorList().isEmpty()) {
+            Model.getInstance().setAllDoctors();
+        }
+    }
+
     private void onCreate() {
         LocalDate date = datePicker.getValue();
         int hours = hourSpinner.getValue();
         int minutes = minutesSpinner.getValue();
         String motivo = motivoField.getText();
-        Medico doctor = doctorsListView.getSelectionModel().getSelectedItem();
-        Paciente patient = patientsListView.getSelectionModel().getSelectedItem();
+        Doctor doctor = doctorsListView.getSelectionModel().getSelectedItem();
+        Patient patient = patientsListView.getSelectionModel().getSelectedItem();
 
         dateWarning.setText(Validador.validateNull(date));
         motivoWarning.setText(Validador.validateRequiredField(motivo));
@@ -87,12 +82,12 @@ public class CreateAppointmentController implements Initializable {
         if (proceed) {
             Timestamp timestamp = Timestamp.valueOf(date.atTime(hours, minutes));
             if (appointment != null) {
-                int doctorId = (doctor == null) ? appointment.getMedicoId() : doctor.getMedicoId();
+                int doctorId = (doctor == null) ? appointment.getDoctorId() : doctor.getId();
 
                 System.out.println("Actualizando cita...");
                 try {
-                    Model.getInstance().getMedicoService().actualizarCita(
-                            appointment.getCitaId(),
+                    Model.getInstance().getMedicoService().updateAppointment(
+                            appointment.getId(),
                             timestamp.toString(),
                             motivo,
                             doctorId
@@ -107,11 +102,11 @@ public class CreateAppointmentController implements Initializable {
 
                 System.out.println("Creando cita...");
                 try {
-                    Model.getInstance().getMedicoService().agregarCita(
+                    Model.getInstance().getMedicoService().addAppointment(
                             timestamp.toString(),
                             motivo,
-                            doctor.getMedicoId(),
-                            patient.getPacienteId()
+                            doctor.getId(),
+                            patient.getId()
                     );
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
@@ -122,6 +117,7 @@ public class CreateAppointmentController implements Initializable {
             Model.getInstance().getViewFactory().closeStage(stage);
 
             // refresh view
+            Model.getInstance().setAllAppointments();
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
             Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.APPOINTMENTS);
         }
@@ -136,7 +132,7 @@ public class CreateAppointmentController implements Initializable {
         if (appointment != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 
-            LocalDateTime dateTime = LocalDateTime.parse(appointment.getFechaHora(), formatter);
+            LocalDateTime dateTime = LocalDateTime.parse(appointment.getDatetime(), formatter);
 
             datePicker.setValue(dateTime.toLocalDate());
             hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(

@@ -1,0 +1,34 @@
+.cell {
+    -fx-padding: 15 20;
+    -fx-alignment: center;
+    -fx-spacing: 30;
+    -fx-pref-width: 900;
+
+    -fx-background-radius: 12;
+    -fx-background-color: #eef5ff;
+}
+
+.cell Label {
+    -fx-font-size: 13;
+}
+
+.id {
+    -fx-pref-width: 20;
+}
+
+.name {
+    -fx-pref-width: 180;
+    -fx-font-weight: bold;
+}
+
+.degree {
+    -fx-pref-width: 170;
+}
+
+.cedula {
+    -fx-pref-width: 100;
+}
+
+.email {
+    -fx-pref-width: 180;
+}

@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-    <VBox prefWidth="100.0" spacing="20.0">
-        <Label text="Agregar nuevo médico" />
-        <VBox>
-            <HBox>
-                <Label text="Nombre" />
-                <TextField fx:id="nameField" promptText="Nombre del médico" />
-            </HBox>
-            <Label fx:id="nameWarning" textFill="RED" />
-        </VBox>
-        <VBox>
-            <HBox prefWidth="200.0">
-                <Label text="Especialidad" />
-                <TextField fx:id="degreeField" promptText="Especialidad" />
-            </HBox>
-            <Label fx:id="degreeWarning" textFill="RED" />
-        </VBox>
-        <VBox>
-            <HBox prefWidth="200.0">
-                <Label text="Cédula" />
-                <TextField fx:id="cedulaField" promptText="Cédula" />
-            </HBox>
-            <Label fx:id="cedulaWarning" textFill="RED" />
-        </VBox>
-        <VBox>
-            <HBox prefWidth="200.0">
-                <Label text="Correo electrónico" />
-                <TextField fx:id="emailField" promptText="losquesaben@gmail.com" />
-            </HBox>
-            <Label fx:id="emailWarning" textFill="RED" />
-        </VBox>
-        <HBox alignment="CENTER_RIGHT">
-            <Button fx:id="createButton" mnemonicParsing="false" text="Confirmar" />
-            <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancelar" />
-        </HBox>
-    </VBox>
+<VBox styleClass="container" stylesheets="@../styles/create-doctor.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+     <Label styleClass="title" text="Agregar nuevo médico" />
+     <VBox>
+         <VBox styleClass="field-container">
+             <Label text="Nombre" />
+             <TextField fx:id="nameField" promptText="Nombre del médico" styleClass="field" />
+         </VBox>
+         <Label fx:id="nameWarning" styleClass="warning" />
+     </VBox>
+     <VBox>
+         <VBox prefWidth="200.0" styleClass="field-container">
+             <Label text="Especialidad" />
+             <TextField fx:id="degreeField" promptText="Especialidad" />
+         </VBox>
+         <Label fx:id="degreeWarning" styleClass="warning" />
+     </VBox>
+     <VBox>
+         <VBox prefWidth="200.0" styleClass="field-container">
+             <Label text="Cédula" />
+             <TextField fx:id="cedulaField" promptText="Cédula" />
+         </VBox>
+         <Label fx:id="cedulaWarning" styleClass="warning" />
+     </VBox>
+     <VBox>
+         <VBox prefWidth="200.0" styleClass="field-container">
+             <Label text="Correo electrónico" />
+             <TextField fx:id="emailField" promptText="losquesaben@gmail.com" />
+         </VBox>
+         <Label fx:id="emailWarning" styleClass="warning" />
+     </VBox>
+     <HBox styleClass="button-container">
+         <Button fx:id="createButton" mnemonicParsing="false" text="Confirmar" />
+         <Button fx:id="cancelButton" mnemonicParsing="false" styleClass="cancel-button" text="Cancelar" />
+     </HBox>
 </VBox>

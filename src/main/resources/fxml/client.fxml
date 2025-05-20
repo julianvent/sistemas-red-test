@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="clientParent" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="clientParent" styleClass="container" stylesheets="@../styles/client.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
     <left>
         <fx:include source="side-bar.fxml" />
     </left>

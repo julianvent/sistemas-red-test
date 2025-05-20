@@ -1,8 +1,8 @@
 package uv.mx.sistemasredproject.server.models;
 
-import uv.mx.sistemasredproject.model.Cita;
-import uv.mx.sistemasredproject.model.Medico;
-import uv.mx.sistemasredproject.model.Paciente;
+import uv.mx.sistemasredproject.model.Appointment;
+import uv.mx.sistemasredproject.model.Doctor;
+import uv.mx.sistemasredproject.model.Patient;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -81,14 +81,14 @@ public class DatabaseDriver {
         }
     }
 
-    public List<Medico> obtenerMedicos() {
-        List<Medico> medicos = new ArrayList<>();
+    public List<Doctor> obtenerMedicos() {
+        List<Doctor> doctors = new ArrayList<>();
         System.out.println("Obteniendo medicos");
         String sql = "SELECT * FROM medico";
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                medicos.add(new Medico(
+                doctors.add(new Doctor(
                         rs.getInt("medico_id"),
                         rs.getString("nombre"),
                         rs.getString("especialidad"),
@@ -100,18 +100,18 @@ public class DatabaseDriver {
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener médicos", e);
         }
-        return medicos;
+        return doctors;
     }
 
-    public Medico getMedico(int medicoId) {
-        Medico medico = null;
+    public Doctor getMedico(int medicoId) {
+        Doctor doctor = null;
         String sql = "SELECT * FROM medico WHERE medico_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, medicoId);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                medico = new Medico(
+                doctor = new Doctor(
                         rs.getInt("medico_id"),
                         rs.getString("nombre"),
                         rs.getString("especialidad"),
@@ -122,7 +122,7 @@ public class DatabaseDriver {
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener médico", e);
         }
-        return medico;
+        return doctor;
     }
 
     public void actualizarMedico(
@@ -182,13 +182,13 @@ public class DatabaseDriver {
         }
     }
 
-    public List<Paciente> obtenerPacientes() {
-        List<Paciente> pacientes = new ArrayList<>();
+    public List<Patient> obtenerPacientes() {
+        List<Patient> patients = new ArrayList<>();
         String sql = "SELECT * FROM paciente";
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                pacientes.add(new Paciente(
+                patients.add(new Patient(
                         rs.getInt("paciente_id"),
                         rs.getString("nombre"),
                         rs.getString("curp"),
@@ -199,18 +199,18 @@ public class DatabaseDriver {
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener pacientes", e);
         }
-        return pacientes;
+        return patients;
     }
 
-    public Paciente getPaciente(int pacienteId) {
-        Paciente paciente = null;
+    public Patient getPaciente(int pacienteId) {
+        Patient patient = null;
         String sql = "SELECT * FROM paciente WHERE paciente_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, pacienteId);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                paciente = new Paciente(
+                patient = new Patient(
                         rs.getInt("paciente_id"),
                         rs.getString("nombre"),
                         rs.getString("curp"),
@@ -221,7 +221,7 @@ public class DatabaseDriver {
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener médico", e);
         }
-        return paciente;
+        return patient;
     }
 
     public void actualizarPaciente(int pacienteId, String nombre, String curp, String telefono) {
@@ -266,13 +266,13 @@ public class DatabaseDriver {
         }
     }
 
-    public List<Cita> obtenerCitas() {
-        List<Cita> citas = new ArrayList<>();
+    public List<Appointment> obtenerCitas() {
+        List<Appointment> appointments = new ArrayList<>();
         String sql = "SELECT * FROM cita";
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                citas.add(new Cita(
+                appointments.add(new Appointment(
                         rs.getInt("cita_id"),
                         rs.getString("fecha_hora"),
                         rs.getString("motivo"),
@@ -283,7 +283,7 @@ public class DatabaseDriver {
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener pacientes", e);
         }
-        return citas;
+        return appointments;
     }
 
     public void actualizarCita(int citaId, String fechaHora, String motivo, int medicoId) {

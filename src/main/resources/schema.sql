@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS medico (
+CREATE TABLE IF NOT EXISTS doctor (
     medico_id INTEGER PRIMARY KEY AUTOINCREMENT
     , nombre TEXT NOT NULL
     , especialidad TEXT NOT NULL
@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS medico (
     , correo_electronico TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS paciente (
+CREATE TABLE IF NOT EXISTS patient (
     paciente_id INTEGER PRIMARY KEY AUTOINCREMENT
     , nombre TEXT NOT NULL
     , curp TEXT NOT NULL UNIQUE
@@ -20,6 +20,6 @@ CREATE TABLE IF NOT EXISTS cita (
     , motivo TEXT NOT NULL
     , medico_id INTEGER NOT NULL
     , paciente_id INTEGER NOT NULL
-    , FOREIGN KEY (medico_id) REFERENCES medico(medico_id)
-    , FOREIGN KEY (paciente_id) REFERENCES paciente(paciente_id)
+    , FOREIGN KEY (medico_id) REFERENCES doctor(medico_id)
+    , FOREIGN KEY (paciente_id) REFERENCES patient(paciente_id)
 );

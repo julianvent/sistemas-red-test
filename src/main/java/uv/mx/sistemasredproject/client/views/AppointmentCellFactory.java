@@ -3,13 +3,13 @@ package uv.mx.sistemasredproject.client.views;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 import uv.mx.sistemasredproject.client.controllers.AppointmentCellController;
-import uv.mx.sistemasredproject.model.Cita;
+import uv.mx.sistemasredproject.model.Appointment;
 
 import java.io.IOException;
 
-public class AppointmentCellFactory extends ListCell<Cita> {
+public class AppointmentCellFactory extends ListCell<Appointment> {
     @Override
-    protected void updateItem(Cita item, boolean empty) {
+    protected void updateItem(Appointment item, boolean empty) {
         super.updateItem(item, empty);
 
         if (empty) {

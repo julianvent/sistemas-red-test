@@ -1,20 +1,18 @@
 package uv.mx.sistemasredproject.client.controllers;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import uv.mx.sistemasredproject.client.model.Model;
-import uv.mx.sistemasredproject.model.Cita;
-import uv.mx.sistemasredproject.model.Medico;
-import uv.mx.sistemasredproject.model.Paciente;
+import uv.mx.sistemasredproject.model.Appointment;
+import uv.mx.sistemasredproject.model.Doctor;
+import uv.mx.sistemasredproject.model.Patient;
 
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class AppointmentCellController implements Initializable {
-    private final Cita appointment;
+    private final Appointment appointment;
     public Label idLabel;
     public Label dateLabel;
     public Label motivoLabel;
@@ -23,34 +21,34 @@ public class AppointmentCellController implements Initializable {
     public Label patientNameLabel;
     public Label patientPhoneLabel;
 
-    public AppointmentCellController(Cita appointment) {
+    public AppointmentCellController(Appointment appointment) {
         this.appointment = appointment;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Medico doctor = null;
+        Doctor doctor = null;
         try {
-            doctor = Model.getInstance().getMedicoService().getMedico(appointment.getMedicoId());
+            doctor = Model.getInstance().getMedicoService().getDoctor(appointment.getDoctorId());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        Paciente patient = null;
+        Patient patient = null;
         try {
-            patient = Model.getInstance().getMedicoService().getPaciente(appointment.getPacienteId());
+            patient = Model.getInstance().getMedicoService().getPatient(appointment.getPatientId());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
 
-        StringProperty dateProperty =
-                new SimpleStringProperty(appointment.getFechaHora().replace(":00.0", ""));
+        String date = appointment.getDatetime().replace(":00.0", "");
 
-        idLabel.textProperty().bind(appointment.citaIdProperty().asString());
-        dateLabel.textProperty().bind(dateProperty);
-        motivoLabel.textProperty().bind(appointment.motivoProperty());
-        doctorNameLabel.textProperty().bind(doctor.nombreProperty());
-        doctorDegreeLabel.textProperty().bind(doctor.especialidadProperty());
-        patientNameLabel.textProperty().bind(patient.nombreProperty());
-        patientPhoneLabel.textProperty().bind(patient.telefonoProperty());
+        idLabel.setText(String.valueOf(appointment.getId()));
+        dateLabel.setText(date);
+        motivoLabel.setText(appointment.getMotivo());
+        doctorNameLabel.setText(doctor.getName());
+        doctorDegreeLabel.setText(doctor.getDegree());
+        patientNameLabel.setText(patient.getName());
+        patientPhoneLabel.setText(patient.getPhone());
+
     }
 }

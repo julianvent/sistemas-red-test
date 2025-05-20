@@ -34,7 +34,7 @@
             <Label fx:id="doctorWarning" textFill="RED" />
         </VBox>
         <VBox>
-            <Label text="Seleccionar paciente" />
+            <Label text="Seleccionar patient" />
             <ListView fx:id="patientsListView" prefHeight="200.0" prefWidth="200.0" />
             <Label fx:id="patientWarning" textFill="RED" />
         </VBox>

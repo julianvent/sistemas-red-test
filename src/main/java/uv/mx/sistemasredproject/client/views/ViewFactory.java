@@ -11,9 +11,9 @@ import uv.mx.sistemasredproject.client.controllers.ClientController;
 import uv.mx.sistemasredproject.client.controllers.CreateAppointmentController;
 import uv.mx.sistemasredproject.client.controllers.CreateDoctorController;
 import uv.mx.sistemasredproject.client.controllers.CreatePatientController;
-import uv.mx.sistemasredproject.model.Cita;
-import uv.mx.sistemasredproject.model.Medico;
-import uv.mx.sistemasredproject.model.Paciente;
+import uv.mx.sistemasredproject.model.Appointment;
+import uv.mx.sistemasredproject.model.Doctor;
+import uv.mx.sistemasredproject.model.Patient;
 
 import java.io.IOException;
 
@@ -81,10 +81,10 @@ public class ViewFactory {
         }
     }
 
-    private VBox getCreateDoctorView(Medico medico) {
+    private VBox getCreateDoctorView(Doctor doctor) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create-doctor.fxml"));
-            CreateDoctorController controller = new CreateDoctorController(medico);
+            CreateDoctorController controller = new CreateDoctorController(doctor);
             loader.setController(controller);
             return loader.load();
         } catch (IOException e) {
@@ -92,9 +92,9 @@ public class ViewFactory {
         }
     }
 
-    public void getCreateDoctorDialog(Medico medico) {
+    public void getCreateDoctorDialog(Doctor doctor) {
         Dialog<String> dialog = new Dialog<>();
-        if (medico != null) dialog.getDialogPane().setContent(getCreateDoctorView(medico));
+        if (doctor != null) dialog.getDialogPane().setContent(getCreateDoctorView(doctor));
         else dialog.getDialogPane().setContent(getCreateDoctorView(null));
         dialog.show();
     }
@@ -109,7 +109,7 @@ public class ViewFactory {
         }
     }
 
-    private VBox getCreatePatientView(Paciente patient) {
+    private VBox getCreatePatientView(Patient patient) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create-patient.fxml"));
             CreatePatientController controller = new CreatePatientController(patient);
@@ -120,7 +120,7 @@ public class ViewFactory {
         }
     }
 
-    public void getCreatePatientDialog(Paciente patient) {
+    public void getCreatePatientDialog(Patient patient) {
         Dialog<String> dialog = new Dialog<>();
         if (patient != null) dialog.getDialogPane().setContent(getCreatePatientView(patient));
         else dialog.getDialogPane().setContent(getCreatePatientView(null));
@@ -137,7 +137,7 @@ public class ViewFactory {
         }
     }
 
-    private VBox getCreateAppointmentView(Cita appointment) {
+    private VBox getCreateAppointmentView(Appointment appointment) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create-appointment.fxml"));
             CreateAppointmentController controller = new CreateAppointmentController(appointment);
@@ -148,7 +148,7 @@ public class ViewFactory {
         }
     }
 
-    public void getCreateAppointmentDialog(Cita appointment) {
+    public void getCreateAppointmentDialog(Appointment appointment) {
         Dialog<String> dialog = new Dialog<>();
         if (appointment != null) dialog.getDialogPane().setContent(getCreateAppointmentView(appointment));
         else dialog.getDialogPane().setContent(getCreateAppointmentView(null));

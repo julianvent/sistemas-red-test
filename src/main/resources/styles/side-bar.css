@@ -1,0 +1,36 @@
+.container {
+    -fx-background-color: #699ae4;
+
+    -fx-padding: 20 10;
+    -fx-spacing: 50;
+
+    -fx-pref-width: 220;
+    -fx-pref-height: 700;
+
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(two-pass-box, #AAAAAA, 5, 0, 0, 4);
+}
+
+.title {
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+    -fx-fill: white;
+}
+
+.button-container {
+    -fx-spacing: 40;
+    -fx-alignment: center;
+}
+
+.button {
+    -fx-background-color: white;
+    -fx-font-weight: bold;
+    -fx-pref-width: 120;
+    -fx-padding: 10 0;
+    -fx-font-size: 16;
+    -fx-background-radius: 8;
+}
+
+.button:hover {
+    -fx-background-color: #EEEEEE;
+}

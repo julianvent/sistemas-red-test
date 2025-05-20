@@ -4,16 +4,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="770.0" minHeight="-Infinity" minWidth="-Infinity"
-      prefWidth="770.0" spacing="30.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="770.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="770.0" spacing="30.0" styleClass="cell" stylesheets="@../styles/doctor-cell.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
-        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
     </padding>
-    <Label fx:id="idLabel" maxWidth="30.0" prefWidth="30.0" text="ID" textAlignment="RIGHT"/>
-    <Label fx:id="nameLabel" maxWidth="150.0" prefWidth="150.0" text="Jose Julian Ventura Uscanga"
-           textAlignment="RIGHT"/>
-    <Label fx:id="curpLabel" maxWidth="125.0" prefWidth="125.0" text="VEUJ040305HVZNSLA5" textAlignment="RIGHT"/>
-    <Label fx:id="phoneLabel" maxWidth="100.0" prefWidth="100.0" text="+52 9213024843" textAlignment="RIGHT"/>
-    <Label fx:id="emailLabel" maxWidth="175.0" prefWidth="175.0" text="correoalgolargo@gmail.com"
-           textAlignment="RIGHT"/>
+    <Label fx:id="idLabel" styleClass="id" text="ID" textAlignment="RIGHT" />
+    <Label fx:id="nameLabel" styleClass="name" text="Jose Julian Ventura Uscanga" textAlignment="RIGHT" />
+    <Label fx:id="curpLabel" styleClass="degree" text="VEUJ040305HVZNSLA5" textAlignment="RIGHT" />
+    <Label fx:id="phoneLabel" styleClass="cedula" text="+52 9213024843" textAlignment="RIGHT" />
+    <Label fx:id="emailLabel" styleClass="email" text="correoalgolargo@gmail.com" textAlignment="RIGHT" />
 </HBox>

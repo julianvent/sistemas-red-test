@@ -2,23 +2,23 @@ package uv.mx.sistemasredproject.client.controllers;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import uv.mx.sistemasredproject.model.Medico;
+import uv.mx.sistemasredproject.model.Doctor;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CustomDoctorCellController implements Initializable {
-    private final Medico doctor;
+    private final Doctor doctor;
     public Label nameLabel;
     public Label degreeLabel;
 
-    public CustomDoctorCellController(Medico doctor) {
+    public CustomDoctorCellController(Doctor doctor) {
         this.doctor = doctor;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        nameLabel.textProperty().bind(doctor.nombreProperty());
-        degreeLabel.textProperty().bind(doctor.especialidadProperty());
+        nameLabel.setText(doctor.getName());
+        degreeLabel.setText(doctor.getDegree());
     }
 }

@@ -29,7 +29,7 @@
         <VBox layoutX="10.0" layoutY="10.0">
             <Label text="Paciente" />
             <HBox>
-                <Label fx:id="patientNameLabel" maxWidth="-Infinity" prefWidth="150.0" text="Nombre del paciente" />
+                <Label fx:id="patientNameLabel" maxWidth="-Infinity" prefWidth="150.0" text="Nombre del patient" />
                 <Label fx:id="patientPhoneLabel" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" prefWidth="90.0" text="+529211231234" />
             </HBox>
         </VBox>

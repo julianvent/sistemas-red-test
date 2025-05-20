@@ -3,40 +3,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-    <VBox prefWidth="100.0" spacing="10.0">
-        <Label text="Agregar nuevo paciente" />
-        <VBox>
-            <HBox>
-                <Label text="Nombre" />
-                <TextField fx:id="nameField" promptText="Nombre del paciente" />
-            </HBox>
-            <Label fx:id="nameWarning" textFill="RED" />
-        </VBox>
-        <VBox>
-            <HBox prefWidth="200.0">
-                <Label text="CURP" />
-                <TextField fx:id="curpField" promptText="CURP" />
-            </HBox>
-            <Label fx:id="curpWarning" textFill="RED" />
-        </VBox>
-        <VBox>
-            <HBox prefWidth="200.0">
-                <Label text="Teléfono" />
-                <TextField fx:id="phoneField" promptText="Teléfono" />
-            </HBox>
-            <Label fx:id="phoneWarning" textFill="RED" />
-        </VBox>
-        <VBox>
-            <HBox prefWidth="200.0">
-                <Label text="Correo electrónico" />
-                <TextField fx:id="emailField" promptText="losquesaben@gmail.com" />
-            </HBox>
-            <Label fx:id="emailWarning" textFill="RED" />
-        </VBox>
-        <HBox alignment="CENTER_RIGHT">
-            <Button fx:id="createButton" mnemonicParsing="false" text="Confirmar" />
-            <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancelar" />
-        </HBox>
-    </VBox>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" styleClass="container" stylesheets="@../styles/create-doctor.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+     <Label styleClass="title" text="Agregar nuevo paciente" />
+     <VBox styleClass="field-container">
+         <VBox>
+             <Label text="Nombre" />
+             <TextField fx:id="nameField" promptText="Nombre del paciente" />
+         </VBox>
+         <Label fx:id="nameWarning" styleClass="warning" textFill="RED" />
+     </VBox>
+     <VBox styleClass="field-container">
+         <VBox prefWidth="200.0">
+             <Label text="CURP" />
+             <TextField fx:id="curpField" promptText="CURP120103CALEBPC5" />
+         </VBox>
+         <Label fx:id="curpWarning" styleClass="warning" textFill="RED" />
+     </VBox>
+     <VBox styleClass="field-container">
+         <VBox prefWidth="200.0">
+             <Label text="Teléfono" />
+             <TextField fx:id="phoneField" promptText="+529211231234" />
+         </VBox>
+         <Label fx:id="phoneWarning" styleClass="warning" textFill="RED" />
+     </VBox>
+     <VBox styleClass="field-container">
+         <VBox prefWidth="200.0">
+             <Label text="Correo electrónico" />
+             <TextField fx:id="emailField" promptText="losquesaben@gmail.com" />
+         </VBox>
+         <Label fx:id="emailWarning" styleClass="warning" textFill="RED" />
+     </VBox>
+     <HBox styleClass="button-container">
+         <Button fx:id="createButton" mnemonicParsing="false" text="Confirmar" />
+         <Button fx:id="cancelButton" mnemonicParsing="false" styleClass="cancel-button" text="Cancelar" />
+     </HBox>
 </VBox>
