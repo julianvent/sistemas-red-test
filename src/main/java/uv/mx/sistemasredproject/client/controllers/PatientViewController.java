@@ -19,6 +19,7 @@ public class PatientViewController implements Initializable {
     public Button add;
     public Button edit;
     public Button delete;
+    public Button refresh;
     public ListView<Patient> patientsListView;
 
     @Override
@@ -30,6 +31,7 @@ public class PatientViewController implements Initializable {
         add.setOnAction(actionEvent -> onAdd());
         edit.setOnAction(actionEvent -> onEdit());
         delete.setOnAction(actionEvent -> onDelete());
+        refresh.setOnAction(actionEvent -> Model.getInstance().setAllPatients());
     }
 
     private void initializePatientList() {
@@ -72,10 +74,7 @@ public class PatientViewController implements Initializable {
                 throw new RuntimeException(e);
             }
 
-            // refresh view
             Model.getInstance().setAllPatients();
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.PATIENTS);
         }
     }
 }

@@ -5,7 +5,6 @@ import javafx.scene.control.*;
 import uv.mx.sistemasredproject.client.model.Model;
 import uv.mx.sistemasredproject.model.Doctor;
 import uv.mx.sistemasredproject.client.views.DoctorCellFactory;
-import uv.mx.sistemasredproject.client.views.SubmenuOptions;
 
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -16,6 +15,7 @@ public class DoctorViewController implements Initializable {
     public Button addDoctor;
     public Button editDoctor;
     public Button deleteDoctor;
+    public Button refreshButton;
 
     public ListView<Doctor> doctorListView;
 
@@ -28,6 +28,7 @@ public class DoctorViewController implements Initializable {
         addDoctor.setOnAction(actionEvent -> onAddDoctor());
         editDoctor.setOnAction(actionEvent -> onEditDoctor());
         deleteDoctor.setOnAction(actionEvent -> onDeleteDoctor());
+        refreshButton.setOnAction(actionEvent -> Model.getInstance().setAllDoctors());
     }
 
     private void initializeAllDoctors() {
@@ -69,10 +70,7 @@ public class DoctorViewController implements Initializable {
                 throw new RuntimeException(e);
             }
 
-            // refresh view
             Model.getInstance().setAllDoctors();
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.DOCTORS);
         }
     }
 }

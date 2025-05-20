@@ -116,10 +116,7 @@ public class CreateAppointmentController implements Initializable {
             Stage stage = (Stage) createButton.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
 
-            // refresh view
             Model.getInstance().setAllAppointments();
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.APPOINTMENTS);
         }
     }
 

@@ -19,6 +19,7 @@ public class AppointmentViewController implements Initializable {
     public Button add;
     public Button edit;
     public Button delete;
+    public Button refresh;
     public ListView<Appointment> appointmentListView;
 
     @Override
@@ -31,6 +32,7 @@ public class AppointmentViewController implements Initializable {
         add.setOnAction(actionEvent -> onAdd());
         edit.setOnAction(actionEvent -> onEdit());
         delete.setOnAction(actionEvent -> onDelete());
+        refresh.setOnAction(actionEvent -> Model.getInstance().setAllAppointments());
     }
 
     private void initializeAppointmentList() {
@@ -72,10 +74,7 @@ public class AppointmentViewController implements Initializable {
                 throw new RuntimeException(e);
             }
 
-            // refresh view
             Model.getInstance().setAllAppointments();
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.APPOINTMENTS);
         }
     }
 }

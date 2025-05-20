@@ -80,8 +80,6 @@ public class CreatePatientController implements Initializable {
 
             // refresh view
             Model.getInstance().setAllPatients();
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.PATIENTS);
         }
     }
 

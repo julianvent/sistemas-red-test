@@ -73,15 +73,11 @@ public class CreateDoctorController implements Initializable {
                     throw new RuntimeException("Error del servidor al actualizar medico", e);
                 }
             }
-
             // close dialog
             Stage stage = (Stage) createButton.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
 
-            // refresh view
             Model.getInstance().setAllDoctors();
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.REFRESH);
-            Model.getInstance().getViewFactory().selectedMenuItemProperty().set(SubmenuOptions.DOCTORS);
         }
     }
 
